@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://apitfm.ddns.net:8065/swagger/ui/index#/'
 };
 
 /*
