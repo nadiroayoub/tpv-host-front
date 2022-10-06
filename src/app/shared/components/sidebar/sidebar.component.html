@@ -1,0 +1,37 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2>Ayoub Nadir</h2>
+      <h4>example@example.com</h4>
+    </div>
+    <img
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Ayoub Nadir"
+    />
+  </div>
+  <mat-divider></mat-divider>
+  <h2 matSubheader>Pages</h2>
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/">
+    {{ navigationElements[0] | uppercase }}
+  </a>
+  <a mat-list-item routerLinkActive="list-item" routerLink="/ventas">
+    {{ navigationElements[1] | uppercase }}
+  </a>
+  <a mat-list-item routerLinkActive="list-item" routerLink="/inventario">
+    {{ navigationElements[2] | uppercase }}</a
+  >
+  <a mat-list-item routerLinkActive="list-item" routerLink="/empleados">{{
+    navigationElements[3] | uppercase
+  }}</a>
+
+  <mat-divider></mat-divider>
+  <!-- <h2 matSubheader>Tools</h2>
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+    <mat-icon>import_contacts</mat-icon>
+    Contacts
+  </a>
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
+    <mat-icon>contact_phone</mat-icon>
+    Leads
+  </a> -->
+</mat-nav-list>
