@@ -1,0 +1,45 @@
+<form
+  class="login100-form"
+  autocomplete="off"
+  [formGroup]="loginFormulario"
+  (ngSubmit)="login()"
+>
+  <!-- <span class="login100-form-title p-b-49">
+        Login
+    </span> -->
+
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de usuario o correo electronico</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+  </div>
+
+  <div class="wrap-input100">
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" />
+    </mat-form-field>
+  </div>
+
+  <div class="text-right p-t-8 p-b-31"></div>
+
+  <div class="container-login100-form-btn">
+    <button
+      class=""
+      mat-raised-button
+      type="submit"
+      color="primary"
+      style="margin-left: 8px"
+      [disabled]="loginFormulario.invalid"
+    >
+      Acceder
+    </button>
+  </div>
+
+  <div class="flex-col-c p-t-60">
+    <a routerLink="/auth/registro" class="txt2">
+      ¿Ha olvidado la contraseña?
+    </a>
+  </div>
+</form>

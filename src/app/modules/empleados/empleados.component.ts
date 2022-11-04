@@ -1,50 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { DialogEmpleadoComponent } from '../dialog-empleado/dialog-empleado.component';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { ApiEmployeeService } from 'src/app/services/apiEmployee/api-employee.service';
 
-export interface Student {
-  name: string;
-  subjects: string[];
-  marks: number[];
-  class: string;
-  section: string;
+export interface Empleado {
+  DNI: string;
+  Nombre: string;
+  Apellidos: string;
+  Pass: string;
+  Foto: string;
 }
-const ELEMENT_DATA: Student[] = [
-  {
-    name: 'Tony',
-    subjects: ['MATH', 'PHY', 'CHEM'],
-    marks: [90, 95, 97],
-    class: '12',
-    section: 'A',
-  },
-  {
-    name: 'Rita',
-    subjects: ['MATH', 'PHY', 'BIO'],
-    marks: [97, 92, 96],
-    class: '12',
-    section: 'A',
-  },
-  {
-    name: 'Monty',
-    subjects: ['MATH', 'PHY', 'BIO'],
-    marks: [80, 99, 100],
-    class: '12',
-    section: 'B',
-  },
-  {
-    name: 'Pintu',
-    subjects: ['GEOLOGY', 'HISTORY'],
-    marks: [90, 95],
-    class: '12',
-    section: 'C',
-  },
-  {
-    name: 'Sarah',
-    subjects: ['PAINTING', 'DANCE'],
-    marks: [97, 100],
-    class: '12',
-    section: 'C',
-  },
-];
 
 @Component({
   selector: 'app-empleados',
@@ -52,69 +26,121 @@ const ELEMENT_DATA: Student[] = [
   styleUrls: ['./empleados.component.scss'],
 })
 export class EmpleadosComponent implements OnInit {
-  displayedColumns: string[] = [
-    'name',
-    'class',
-    'section',
-    'subjects',
-    'marks',
-  ];
+  private apiUrl = environment.apiUrl;
+  displayedColumns: string[] = ['DNI', 'Nombre', 'Apellidos', 'accion'];
   columns = [
     {
-      columnDef: 'name',
-      header: 'Name',
-      cell: (element: Student) => `${element.name}`,
+      columnDef: 'DNI',
+      header: 'Dni',
+      cell: (element: Empleado) => `${element.DNI}`,
     },
     {
-      columnDef: 'class',
-      header: 'Class',
-      cell: (element: Student) => `${element.class}`,
+      columnDef: 'Nombre',
+      header: 'Nombre',
+      cell: (element: Empleado) => `${element.Nombre}`,
     },
     {
-      columnDef: 'section',
-      header: 'Section',
-      cell: (element: Student) => `${element.section}`,
+      columnDef: 'Apellidos',
+      header: 'Apellidos',
+      cell: (element: Empleado) => `${element.Apellidos}`,
     },
     {
-      columnDef: 'subjects',
-      header: 'Subjects',
-      cell: (element: Student) => `${element.subjects.join(', ')}`,
+      columnDef: 'Pass',
+      header: 'Pass',
+      cell: (element: Empleado) => `${element.Pass}`,
     },
     {
-      columnDef: 'marks',
-      header: 'Marks',
-      cell: (element: Student) => `${element.marks.join(', ')}`,
+      columnDef: 'Foto',
+      header: 'Foto',
+      cell: (element: Empleado) => `${element.Foto}`,
     },
   ];
-  dataSource!: MatTableDataSource<Student>;
-  constructor() {}
+  dataSource: MatTableDataSource<Empleado> = new MatTableDataSource<Empleado>(
+    []
+  );
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private apiEmployeeService: ApiEmployeeService
+  ) {}
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.getAllEmployees();
   }
 
-  // This is the method which get called from your filter input
+  //#region Employee API
+  editEmployee(row: any) {
+    this.dialog
+      .open(DialogEmpleadoComponent, {
+        width: '30%',
+        data: row,
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Editar') {
+          this.getAllEmployees();
+        }
+      });
+  }
+  getAllEmployees() {
+    this.apiEmployeeService.getList().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        alert('Error while fetching Employees:/Empleado/ReadAll records!');
+      },
+    });
+  }
+  deleteEmployee(id: number) {
+    this.apiEmployeeService.delete('p_empleado_oid', id).subscribe({
+      next: (res) => {
+        console.log('Employee eliminado');
+        this.getAllEmployees();
+      },
+      error: () => {
+        alert('Error al momento de eliminar employee');
+      },
+    });
+  }
+  //#endregion
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toUpperCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-  // This is our filter method.
-  // It has to return a function
-  // Method of the function should be
-  // (data: InterfaceName, filter: string): boolean
   filterBySubject() {
-    let filterFunction = (data: Student, filter: string): boolean => {
-      if (filter) {
-        const subjects = data.subjects;
-        for (let i = 0; i < subjects.length; i++) {
-          if (subjects[i].indexOf(filter) != -1) {
-            return true;
-          }
+    // let filterFunction = (data: Empleado
+    //     const Nombre = data.Nombre;
+    //     for (let i = 0; i < subjects.length; i++) {
+    //       if (subjects[i].indexOf(filter) != -1) {
+    //         return true;
+    //       }
+    //     }
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // };
+    // return filterFunction;
+  }
+  openDialog(): void {
+    this.dialog
+      .open(DialogEmpleadoComponent, {
+        width: '30%',
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Guardar') {
+          this.getAllEmployees();
         }
-        return false;
-      } else {
-        return true;
-      }
-    };
-    return filterFunction;
+      });
   }
 }

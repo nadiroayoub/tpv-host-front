@@ -1,0 +1,26 @@
+form {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 32;
+  width: 20rem;
+  mat-form-field {
+    width: 100%;
+  }
+  .container-login100-form-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    button {
+      background-color: #57ae51 !important;
+      margin: 0 auto !important;
+      width: 50% !important;
+      margin-bottom: 1rem !important;
+    }
+  }
+  .flex-col-c.p-t-60 {
+    a {
+      color: #6c757d;
+      font-size: 12px;
+    }
+  }
+}

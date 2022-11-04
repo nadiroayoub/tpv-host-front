@@ -15,6 +15,10 @@ import { AreaComponent } from './widgets/area/area.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { CardComponent } from './widgets/card/card.component';
 import { PieComponent } from './widgets/pie/pie.component';
+import { CalendarComponent } from './widgets/calendar/calendar.component';
+import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
+import { ColumnChartComponent } from './widgets/column/column-chart.component';
+import { BarComponent } from './widgets/bar/bar.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,9 @@ import { PieComponent } from './widgets/pie/pie.component';
     AreaComponent,
     CardComponent,
     PieComponent,
+    CalendarComponent,
+    ColumnChartComponent,
+    BarComponent,
   ],
   imports: [
     CommonModule,
@@ -36,14 +43,18 @@ import { PieComponent } from './widgets/pie/pie.component';
     MatListModule,
     RouterModule,
     HighchartsChartModule,
+    CalendarModule,
   ],
   exports: [
-    HeaderComponent,
     FooterComponent,
+    HeaderComponent,
     SidebarComponent,
     AreaComponent,
     CardComponent,
     PieComponent,
+    CalendarComponent,
+    ColumnChartComponent,
+    BarComponent
   ],
 })
 export class SharedModule {}

@@ -11,27 +11,24 @@
   </div>
   <mat-divider></mat-divider>
   <h2 matSubheader>Pages</h2>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/">
+  <a
+    mat-list-item
+    routerLinkActive="list-item-active"
+    routerLink="/dashboard/panelControl"
+  >
     {{ navigationElements[0] | uppercase }}
   </a>
-  <a mat-list-item routerLinkActive="list-item" routerLink="/ventas">
+  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/ventas">
     {{ navigationElements[1] | uppercase }}
   </a>
-  <a mat-list-item routerLinkActive="list-item" routerLink="/inventario">
+  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/inventario">
     {{ navigationElements[2] | uppercase }}</a
   >
-  <a mat-list-item routerLinkActive="list-item" routerLink="/empleados">{{
+  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/empleados">{{
     navigationElements[3] | uppercase
   }}</a>
-
+  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/negocios">{{
+    navigationElements[4] | uppercase
+  }}</a>
   <mat-divider></mat-divider>
-  <!-- <h2 matSubheader>Tools</h2>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
-    <mat-icon>import_contacts</mat-icon>
-    Contacts
-  </a>
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts">
-    <mat-icon>contact_phone</mat-icon>
-    Leads
-  </a> -->
 </mat-nav-list>

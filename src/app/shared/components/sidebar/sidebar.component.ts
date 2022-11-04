@@ -11,6 +11,7 @@ export class SidebarComponent implements OnInit {
     'ventas',
     'proveedores',
     'empleados',
+    'negocios'
   ];
   constructor() {}
 

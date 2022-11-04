@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>Agregar nuevo negocio</h1>
+<div mat-dialog-content>
+  <form [formGroup]="negocioForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input formControlName="direccion" matInput placeholder="Dirección" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input formControlName="ciudad" matInput placeholder="Ciudad" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Código Postal</mat-label>
+      <input formControlName="cp" matInput placeholder="Código Postal" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Provincia</mat-label>
+      <input formControlName="provincia" matInput placeholder="Provincia" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>País</mat-label>
+      <input formControlName="pais" matInput placeholder="Pais" />
+    </mat-form-field>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    (click)="addNegocio($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

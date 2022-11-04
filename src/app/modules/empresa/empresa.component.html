@@ -1,0 +1,103 @@
+<!-- Header of page -->
+<div class="header-page">
+  <p>Datos de las empresa</p>
+  <button mat-button class="agregar-empleado" (click)="openDialog()">
+    Agregar empresa
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Nombre }} </mat-cell>
+        </ng-container>
+
+        <!-- Direccion Column -->
+        <ng-container matColumnDef="Direccion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Direccion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Direccion }} </mat-cell>
+        </ng-container>
+
+        <!-- Ciudad Column -->
+        <ng-container matColumnDef="Ciudad">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Ciudad
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Ciudad }} </mat-cell>
+        </ng-container>
+
+        <!-- Cp Column -->
+        <ng-container matColumnDef="CodigoPostal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Codigo Postal
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.CodigoPostal }} </mat-cell>
+        </ng-container>
+
+        <!-- Ciudad Column -->
+        <ng-container matColumnDef="Provincia">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Provincia
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Provincia }} </mat-cell>
+        </ng-container>
+
+        <!-- Pais Column -->
+        <ng-container matColumnDef="Pais">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Pais
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Pais }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <!-- <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editEmployee(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deleteEmployee(row.DNI)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button> -->
+          </mat-cell>
+        </ng-container>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No Hay Datos que coincidan con el filtro
+          </td>
+        </tr> -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>
