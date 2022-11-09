@@ -6,6 +6,7 @@ import { VentasComponent } from './modules/ventas/ventas.component';
 import { InventarioComponent } from './modules/inventario/inventario.component';
 import { NegociosComponent } from './modules/negocios/negocios.component';
 import { PanelDeControlComponent } from './modules/panel-de-control/panel-de-control.component';
+import { ValidarTokenGuard } from './guards/validar-token.guard';
 
 const routes: Routes = [
   // {
@@ -46,6 +47,8 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () =>
       import('./modules/modules.module').then((m) => m.ModulesModule),
+    canActivate: [ValidarTokenGuard],
+    canLoad: [ValidarTokenGuard],
   },
   {
     path: '**',

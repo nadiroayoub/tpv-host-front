@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   loginFormulario: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    //  Validators.minLength(6)
+    password: ['', [Validators.required]],
   });
   constructor(
     private fb: FormBuilder,
@@ -23,15 +24,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
   login() {
     const { email, password } = this.loginFormulario.value;
-
-    // id: 917504
-    // password: "ayoub.nadir"
-    this.authService.login(917504, password).subscribe((token) => {
-      console.log(token);
+    this.authService.login(email, password).subscribe((token) => {
       if (typeof token !== 'object') {
+        sessionStorage.setItem('token', token);
         this.router.navigateByUrl('/dashboard');
       } else {
-        Swal.fire('Error', token, 'error');
+        Swal.fire({
+          icon: 'error',
+          heightAuto: false,
+          title: 'Usuario no existe',
+        });
       }
     });
   }

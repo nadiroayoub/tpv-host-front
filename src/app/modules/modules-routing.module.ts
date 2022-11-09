@@ -6,6 +6,7 @@ import { NegociosComponent } from './negocios/negocios.component';
 import { PanelDeControlComponent } from './panel-de-control/panel-de-control.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { DefaultComponent } from '../layouts/default/default.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'negocios',
         component: NegociosComponent,
+      },
+      {
+        path: 'perfil',
+        component: ProfileComponent,
       },
       {
         path: '**',

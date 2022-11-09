@@ -21,26 +21,27 @@ export class AuthService {
     const url = `${this.apiUrl}/auth/new`;
     const body = { email, password, name };
 
-    return this.http.post<AuthResponse>(url, body).pipe(
-      tap(({ ok, token }) => {
-        if (ok) {
-          localStorage.setItem('token', token!);
-        }
-      }),
-      map((resp) => resp.ok),
-      catchError((err) => of(err.error.msg))
-    );
+    return this.http
+      .post<AuthResponse>(url, body)
+      .pipe
+      // tap(({ ok, token }) => {
+      //   if (ok) {
+      //     localStorage.setItem('token', token!);
+      //   }
+      // }),
+      // map((resp) => resp.ok),
+      // catchError((err) => of(err.error.msg))
+      ();
   }
 
-  login(Id: number, Pass: string) {
-    const url = `${this.apiUrl}/DuenyoRegistrado/Login`;
-    const body = { Id, Pass };
+  login(Email: string, Pass: string) {
+    const url = `${this.apiUrl}/DuenyoAnonimo/Login`;
+    const body = { Email, Pass };
 
     return this.http.post<string>(url, body).pipe(
       tap((resp) => {
-        console.log(resp);
         if (resp != '') {
-          localStorage.setItem('token', resp);
+          sessionStorage.setItem('token', resp);
         }
       }),
       map((resp) => resp),
@@ -49,28 +50,35 @@ export class AuthService {
   }
 
   validarToken(): Observable<boolean> {
-    const url = `${this.apiUrl}/auth/renew`;
+    const url = `${this.apiUrl}/DuenyoRegistrado`;
     const headers = new HttpHeaders().set(
-      'x-token',
-      localStorage.getItem('token') || ''
+      'Authorization',
+      sessionStorage.getItem('token') || ''
     );
-
+    if (headers.get('Authorization') == '') {
+      return of(false);
+    }
+    const x = headers.get('Authorization');
     return this.http.get<AuthResponse>(url, { headers }).pipe(
       map((resp) => {
-        localStorage.setItem('token', resp.token!);
+        sessionStorage.setItem('token', sessionStorage.getItem('token')!);
         this._usuario = {
-          name: resp.name!,
-          uid: resp.uid!,
-          email: resp.email!,
+          Id: resp.Id!,
+          Nombre: resp.Nombre!,
+          Apellido: resp.Apellido!,
+          Telefono: resp.Telefono!,
+          Email: resp.Email!,
+          Dni: resp.Dni!,
+          Pass: resp.Pass!,
+          Foto: resp.Foto!,
         };
-
-        return resp.ok;
+        return true;
       }),
       catchError((err) => of(false))
     );
   }
 
   logout() {
-    localStorage.clear();
+    sessionStorage.removeItem('token');
   }
 }

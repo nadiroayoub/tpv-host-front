@@ -1,4 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Usuario } from '../../../auth/interfaces/interfaces';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,14 +8,17 @@ import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  usuario!: Usuario;
   navigationElements = [
     'Panel de control',
     'ventas',
     'proveedores',
     'empleados',
-    'negocios'
+    'negocios',
   ];
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.usuario = this.authService.usuario;
+  }
 }

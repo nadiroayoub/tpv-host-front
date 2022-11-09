@@ -1,16 +1,17 @@
 <mat-nav-list>
   <div class="profile-card">
     <div class="header">
-      <h2>Ayoub Nadir</h2>
-      <h4>example@example.com</h4>
+      <h2>{{ this.usuario.Nombre }}</h2>
+      <h4>{{ this.usuario.Email }}</h4>
     </div>
     <img
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Ayoub Nadir"
-    />
+        width="120"
+        height="120"
+        class=""
+        [src]="usuario.Foto ?? 'assets/images/profile-placeholder.png'"
+      />
   </div>
   <mat-divider></mat-divider>
-  <h2 matSubheader>Pages</h2>
   <a
     mat-list-item
     routerLinkActive="list-item-active"
@@ -21,14 +22,24 @@
   <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/ventas">
     {{ navigationElements[1] | uppercase }}
   </a>
-  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/inventario">
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/inventario"
+  >
     {{ navigationElements[2] | uppercase }}</a
   >
-  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/empleados">{{
-    navigationElements[3] | uppercase
-  }}</a>
-  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/negocios">{{
-    navigationElements[4] | uppercase
-  }}</a>
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/empleados"
+    >{{ navigationElements[3] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/negocios"
+    >{{ navigationElements[4] | uppercase }}</a
+  >
   <mat-divider></mat-divider>
 </mat-nav-list>

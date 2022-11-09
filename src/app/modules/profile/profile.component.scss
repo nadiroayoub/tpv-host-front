@@ -1,0 +1,48 @@
+mat-form-field {
+  width: 40%;
+  display: inline-block;
+  &:nth-child(odd) {
+    margin-right: 1rem;
+  }
+}
+.angularformcss {
+  margin-bottom: 2rem;
+}
+.btn-guardar {
+  display: block;
+}
+.angularformcss {
+  font-size: 14px;
+  text-align: left;
+}
+
+.angularformcss img {
+  margin-bottom: -6px;
+}
+
+.inputLable {
+  padding-right: 20px;
+}
+.input-icon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.profile-image > img {
+  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.profile-image {
+  position: relative;
+}
+
+.profile-image > button {
+  position: absolute;
+  bottom: 10px;
+}
+
+.form-inputs {
+  margin-top: 2rem;
+}

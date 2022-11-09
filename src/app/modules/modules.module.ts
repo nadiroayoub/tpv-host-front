@@ -15,14 +15,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogEmpleadoComponent } from './dialog-empleado/dialog-empleado.component';
-import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiEmployeeService } from '../services/apiEmployee/api-employee.service';
 import { NegociosComponent } from './negocios/negocios.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PanelDeControlComponent } from './panel-de-control/panel-de-control.component';
 import { NegocioComponent } from './negocio/negocio.component';
@@ -30,7 +34,7 @@ import { DialogNegocioComponent } from './dialog-negocio/dialog-negocio.componen
 import { EmpresaComponent } from './empresa/empresa.component';
 import { DialogEmpresaComponent } from './dialog-empresa/dialog-empresa.component';
 import { ModulesRoutingModule } from './modules-routing.module';
-
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +49,7 @@ import { ModulesRoutingModule } from './modules-routing.module';
     DialogNegocioComponent,
     EmpresaComponent,
     DialogEmpresaComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -54,13 +59,11 @@ import { ModulesRoutingModule } from './modules-routing.module';
     MatPaginatorModule,
     MatCardModule,
     MatTableModule,
-    MatFormFieldModule,
     MatIconModule,
     MatPaginatorModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatDividerModule,
-    MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
