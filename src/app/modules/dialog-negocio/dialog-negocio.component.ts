@@ -3,15 +3,13 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControlName,
   FormControl,
 } from '@angular/forms';
 import { ApiNegocioService } from '../../services/apiNegocio/api-negocio.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Empresa } from 'src/app/shared/models/Empresa';
+import { ApiEmpresaService } from 'src/app/services/apiEmpresa/api-empresa.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-negocio',
@@ -21,10 +19,13 @@ import {
 export class DialogNegocioComponent implements OnInit {
   negocioForm!: FormGroup;
   btnAccion: string = 'Guardar';
+  empresas!: Empresa[];
+
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private apiNegocioService: ApiNegocioService,
+    private apiEmpresaService: ApiEmpresaService,
     private dialogRef: MatDialogRef<DialogNegocioComponent>
   ) {}
 
@@ -33,41 +34,61 @@ export class DialogNegocioComponent implements OnInit {
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
       ciudad: ['', Validators.required],
-      cp: [''],
-      provincia: [''],
-      pais: [''],
+      cp: ['', Validators.required],
+      provincia: ['', Validators.required],
+      pais: ['', Validators.required],
+      Empresa_oid: ['', Validators.required],
     });
-    console.log(this.editData);
     if (this.editData) {
       this.btnAccion = 'Editar';
       this.negocioForm.controls['nombre'].setValue(this.editData.Nombre);
       this.negocioForm.controls['direccion'].setValue(this.editData.Direccion);
+      this.negocioForm.controls['ciudad'].setValue(this.editData.Ciudad);
+      this.negocioForm.controls['cp'].setValue(this.editData.Cp);
+      this.negocioForm.controls['provincia'].setValue(this.editData.Provincia);
+      this.negocioForm.controls['pais'].setValue(this.editData.Pais);
+      this.negocioForm.controls['Empresa_oid'].setValue(
+        this.editData.Negocio.Id
+      );
     }
+    this.getEmpresas();
   }
-  addNegocio(data: any) {
-    // this.negocioForm.addControl(
-    //   'Foto',
-    //   new FormControl('', Validators.required)
-    // );
-    this.negocioForm.addControl(
-      'Empresa_oid',
-      new FormControl(65536, Validators.required)
-    );
-    // this.negocioForm.removeControl('rol');
-    // this.negocioForm.removeControl('lugar');
-    this.negocioForm.patchValue({
-      Empresa_oid: 65536,
+
+  //#region Empresa API
+  getEmpresas() {
+    this.apiEmpresaService.getList().subscribe({
+      next: (res) => {
+        this.empresas = res;
+      },
+      error: (err) => {
+        alert('Error while fetching Empresa:/Empresa/ReadAll records!');
+      },
     });
+  }
+  //#endregion
+
+  //#region Negocio API
+  addNegocio(data: any) {
     if (!this.editData) {
       if (this.negocioForm.valid) {
         this.apiNegocioService.add(this.negocioForm.value).subscribe({
           next: (res) => {
-            console.log('Negocio agregado');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Negocio creado',
+              showConfirmButton: false,
+              timer: 3500,
+            });
             this.negocioForm.reset();
             this.dialogRef.close('Guardar');
           },
           error: () => {
-            alert('Error al momento de agregar un nuevo Negocio');
+            Swal.fire({
+              icon: 'error',
+              heightAuto: false,
+              title: 'No se puede crear un negocio',
+            });
           },
         });
       }
@@ -90,4 +111,5 @@ export class DialogNegocioComponent implements OnInit {
   getNegocio() {
     return this.apiNegocioService.getList();
   }
+  //#endregion
 }

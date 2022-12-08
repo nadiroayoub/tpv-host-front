@@ -8,7 +8,6 @@ import {
 import { ApiDuenyoService } from '../../services/apiDuenyo/api-duenyo.service';
 import { Usuario } from '../../auth/interfaces/interfaces';
 import { AuthService } from '../../auth/services/auth.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +20,7 @@ export class ProfileComponent implements OnInit {
   hide = true;
   hideConfirmPassword = true;
   emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  nifNieRegex = /^[XYZ]?\d{5,8}[A-Z]$/;
   constructor(
     private formBuilder: FormBuilder,
     private apiDuenyoService: ApiDuenyoService,
@@ -32,7 +32,10 @@ export class ProfileComponent implements OnInit {
     this.duenyoForm = this.formBuilder.group(
       {
         foto: [this.usuario.Foto, Validators.required],
-        dni: [this.usuario.Dni, Validators.required],
+        dni: [
+          this.usuario.Dni,
+          [Validators.required, Validators.pattern(this.nifNieRegex)],
+        ],
         nombre: [this.usuario.Nombre, Validators.required],
         apellidos: [this.usuario.Apellido, Validators.required],
         telefono: [this.usuario.Telefono],
@@ -93,9 +96,10 @@ export class ProfileComponent implements OnInit {
       });
   }
   UploadProfilePicture(event: any, usuario: Usuario): any {
-    // console.log(event.target.files[0]);
-    this.apiDuenyoService.UpladImage(this.usuario.Id).subscribe((res) => {
-      return res;
-    });
+    this.apiDuenyoService
+      .UpladImage(this.usuario.Id, event.target.files[0])
+      .subscribe((res) => {
+        return res;
+      });
   }
 }

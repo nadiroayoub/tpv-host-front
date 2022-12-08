@@ -4,33 +4,132 @@
     <mat-form-field appearance="outline">
       <mat-label>DNI</mat-label>
       <input formControlName="dni" matInput placeholder="Dni" />
+      <app-error-message
+        [field]="empleadoForm.get('dni')"
+        error="required"
+        message="DNI es obligatorio"
+        style="display: block"
+      ></app-error-message
+      ><app-error-message
+        [field]="empleadoForm.get('dni')"
+        error="pattern"
+        message="DNI no es válido"
+        style="display: block"
+      ></app-error-message>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
       <input formControlName="nombre" matInput placeholder="Nombre" />
+      <app-error-message
+        [field]="empleadoForm.get('nombre')"
+        error="required"
+        message="Nombre es obligatorio"
+        style="display: block"
+      ></app-error-message>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Apellidos</mat-label>
       <input formControlName="apellidos" matInput placeholder="Apellidos" />
+      <app-error-message
+        [field]="empleadoForm.get('apellidos')"
+        error="required"
+        message="Apellidos es obligatorio"
+        style="display: block"
+      ></app-error-message>
     </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Correo Electronico</mat-label>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="Correo Electronico"
+        />
+        <app-error-message
+          [field]="empleadoForm.get('email')"
+          error="required"
+          message="Correo electrónico es obligatorio"
+          style="display: block"
+        ></app-error-message>
+        <app-error-message
+          [field]="empleadoForm.get('email')"
+          error="pattern"
+          message="correo electronico invalido"
+          style="display: block"
+        ></app-error-message>
+      </mat-form-field>
+    </div>
     <mat-form-field appearance="outline">
-      <mat-label>Rol</mat-label>
-      <mat-select formControlName="rol" placeholder="Rol">
-        <mat-option value="camarero">Camarero</mat-option>
-        <mat-option value="cajero">Cajero</mat-option>
+      <mat-label>Negocio</mat-label>
+      <mat-select formControlName="Negocio_oid" placeholder="Negocio" value="Negocio_oid.value">
+        <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
+          {{ negocio.Nombre }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Lugar</mat-label>
-      <mat-select formControlName="lugar" placeholder="Lugar">
-        <!-- get restaurants of an admin and show them as a options -->
-        <mat-option value="camarero">Camarero</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Contraseña</mat-label>
-      <input formControlName="pass" matInput placeholder="Contraseña" />
-    </mat-form-field>
+    <div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input
+            formControlName="pass"
+            matInput
+            placeholder="Contraseña"
+            [type]="hide ? 'password' : 'text'"
+          />
+          <mat-icon matSuffix (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <app-error-message
+            [field]="empleadoForm.get('pass')"
+            error="required"
+            message="Contraseña es obligatoria"
+            style="display: block"
+          ></app-error-message>
+          <app-error-message
+            [field]="empleadoForm.get('pass')"
+            error="pattern"
+            message="La contraseña debe contener al menos un número, una mayúscula, un carácter especial y un letra minúscula y al menos 8 caracteres, la contraseña no puede contener espacios en blanco"
+            style="display: block"
+          ></app-error-message>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input
+            formControlName="duplicatePass"
+            matInput
+            placeholder="Confirmar Contraseña"
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+          />
+          <mat-icon
+            matSuffix
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+            >{{
+              hideConfirmPassword ? "visibility_off" : "visibility"
+            }}</mat-icon
+          >
+          <app-error-message
+            [field]="empleadoForm.get('duplicatePass')"
+            error="required"
+            message="Contraseña es obligatoria"
+            style="display: block"
+          ></app-error-message>
+          <app-error-message
+            [field]="empleadoForm.get('duplicatePass')"
+            error="pattern"
+            message="La contraseña debe contener al menos un número, una mayúscula, un carácter especial y un letra minúscula y al menos 8 caracteres, la contraseña no puede contener espacios en blanco"
+            style="display: block"
+          ></app-error-message>
+          <app-error-message
+            [field]="empleadoForm.get('duplicatePass')"
+            error="MustMatch"
+            message="Las contraseñas deben coincidir"
+          ></app-error-message>
+        </mat-form-field>
+      </div>
+    </div>
   </form>
 </div>
 <div class="buttons" mat-dialog-action [align]="'end'">
@@ -39,8 +138,9 @@
     style="margin-left: 8px"
     mat-raised-button
     color="primary"
+    [disabled]="!empleadoForm.valid"
     (click)="addEmpleado($event)"
   >
-    {{btnAccion}}
+    {{ btnAccion }}
   </button>
 </div>

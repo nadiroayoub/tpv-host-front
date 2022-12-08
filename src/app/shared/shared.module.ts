@@ -19,6 +19,9 @@ import { CalendarComponent } from './widgets/calendar/calendar.component';
 import { CalendarModule } from '@syncfusion/ej2-angular-calendars';
 import { ColumnChartComponent } from './widgets/column/column-chart.component';
 import { BarComponent } from './widgets/bar/bar.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { MatInputModule } from '@angular/material/input';
+import { TitleCasePipe } from './pipe/title-case.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,8 @@ import { BarComponent } from './widgets/bar/bar.component';
     CalendarComponent,
     ColumnChartComponent,
     BarComponent,
+    ErrorMessageComponent,
+    TitleCasePipe,
   ],
   imports: [
     CommonModule,
@@ -44,6 +49,7 @@ import { BarComponent } from './widgets/bar/bar.component';
     RouterModule,
     HighchartsChartModule,
     CalendarModule,
+    MatInputModule,
   ],
   exports: [
     FooterComponent,
@@ -54,7 +60,9 @@ import { BarComponent } from './widgets/bar/bar.component';
     PieComponent,
     CalendarComponent,
     ColumnChartComponent,
-    BarComponent
+    BarComponent,
+    ErrorMessageComponent,
+    TitleCasePipe,
   ],
 })
 export class SharedModule {}

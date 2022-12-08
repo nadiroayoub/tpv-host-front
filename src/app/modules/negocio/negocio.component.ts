@@ -1,25 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogNegocioComponent } from '../dialog-negocio/dialog-negocio.component';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
-import { environment } from '../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-
-export interface Negocio {
-  idNegocio: string;
-  nombre: string;
-  direccion: string;
-  ciudad: string;
-  cp: string;
-  provincia: string;
-  pais: string;
-}
+import { Negocio } from 'src/app/shared/models/Negocio';
+import { ApiEmployeeService } from '../../services/apiEmployee/api-employee.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-negocio',
@@ -27,7 +15,6 @@ export interface Negocio {
   styleUrls: ['./negocio.component.scss'],
 })
 export class NegocioComponent implements OnInit {
-  private apiUrl = environment.apiUrl;
   displayedColumns: string[] = [
     // 'idNegocio',
     'Nombre',
@@ -42,32 +29,32 @@ export class NegocioComponent implements OnInit {
     {
       columnDef: 'Nombre',
       header: 'Nombre',
-      cell: (element: Negocio) => `${element.nombre}`,
+      cell: (element: Negocio) => `${element.Nombre}`,
     },
     {
       columnDef: 'Direccion',
       header: 'Direccion',
-      cell: (element: Negocio) => `${element.direccion}`,
+      cell: (element: Negocio) => `${element.Direccion}`,
     },
     {
       columnDef: 'Ciudad',
       header: 'Ciudad',
-      cell: (element: Negocio) => `${element.ciudad}`,
+      cell: (element: Negocio) => `${element.Cuidad}`,
     },
     {
       columnDef: 'Codigo postal',
       header: 'Codigo postal',
-      cell: (element: Negocio) => `${element.cp}`,
+      cell: (element: Negocio) => `${element.Cp}`,
     },
     {
       columnDef: 'Provincia',
       header: 'Provincia',
-      cell: (element: Negocio) => `${element.provincia}`,
+      cell: (element: Negocio) => `${element.Provincia}`,
     },
     {
       columnDef: 'Pais',
       header: 'Pais',
-      cell: (element: Negocio) => `${element.pais}`,
+      cell: (element: Negocio) => `${element.Pais}`,
     },
   ];
   dataSource: MatTableDataSource<Negocio> = new MatTableDataSource<Negocio>([]);
@@ -75,14 +62,15 @@ export class NegocioComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,
-    private apiNegocioService: ApiNegocioService
+    private apiNegocioService: ApiNegocioService,
+    private apiEmployeeService: ApiEmployeeService
   ) {}
 
   ngOnInit(): void {
     this.getAllNegocios();
   }
 
-  //#region
+  //#region Negocio API
   getAllNegocios() {
     this.apiNegocioService.getList().subscribe({
       next: (res) => {
@@ -95,6 +83,51 @@ export class NegocioComponent implements OnInit {
         alert('Error while fetching /Negocio/ReadAll records!');
       },
     });
+  }
+  editNegocio(row: any) {
+    this.dialog
+      .open(DialogNegocioComponent, {
+        width: '30%',
+        data: row,
+      })
+      .afterClosed()
+      .subscribe((val) => {
+        if (val === 'Editar') {
+          this.getAllNegocios();
+        }
+      });
+  }
+  deleteNegocio(id: number) {
+    // Check if negocio have empleados
+    var empleadosByNegocio: any = [];
+    this.apiEmployeeService.getAllEmpleadoByNegocio(id).subscribe({
+      next: (res) => {
+        empleadosByNegocio = res == null ? []: res;
+        // Eliminar un negocio en caso de que no tenga empleados
+        if (empleadosByNegocio.length == 0) {
+          this.apiNegocioService.delete('p_negocio_oid', id).subscribe({
+            next: (res) => {
+              console.log('Negocio eliminado');
+              this.getAllNegocios();
+            },
+            error: (err) => {
+              alert(err + 'Error al momento de eliminar negocio');
+            },
+          });
+        }else{
+          Swal.fire({
+            icon: 'warning',
+            heightAuto: false,
+            title: '¡No se puede eliminar el negocio!',
+            text: 'Negocio tiene elementos relacionados.',
+          });
+        }
+      },
+      error: (err) => {
+        alert(err + 'Error al momento de devolver empleados de un negocio');
+      },
+    });
+
   }
   //#endregion
   //#region NEGOCIO DIALOG

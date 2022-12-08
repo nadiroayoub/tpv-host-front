@@ -2,7 +2,14 @@ form {
   background: #ffffff;
   padding: 2rem;
   border-radius: 32;
-  width: 20rem;
+  width: 40rem;
+  .nombre-apellido-container {
+    display: flex;
+    justify-content: space-between;
+    div {
+      flex-basis: 45%;
+    }
+  }
   mat-form-field {
     width: 100%;
   }

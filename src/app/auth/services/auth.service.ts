@@ -17,21 +17,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  registro(name: string, email: string, password: string) {
-    const url = `${this.apiUrl}/auth/new`;
-    const body = { email, password, name };
+  signup(formValue: any) {
+    const url = `${this.apiUrl}/DuenyoAnonimo/nuevo`;
+    const body = formValue;
 
-    return this.http
-      .post<AuthResponse>(url, body)
-      .pipe
-      // tap(({ ok, token }) => {
-      //   if (ok) {
-      //     localStorage.setItem('token', token!);
-      //   }
-      // }),
-      // map((resp) => resp.ok),
-      // catchError((err) => of(err.error.msg))
-      ();
+    return this.http.post<any>(url, body).pipe(
+      tap((resp) => resp),
+      map((resp) => resp),
+      catchError((err) => of(err))
+    );
   }
 
   login(Email: string, Pass: string) {

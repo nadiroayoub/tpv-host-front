@@ -1,21 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ApiEmpresaService } from 'src/app/services/apiEmpresa/api-empresa.service';
-import { environment } from '../../../environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogEmpresaComponent } from '../dialog-empresa/dialog-empresa.component';
-
-export interface Empresa {
-  idEmpresa: string;
-  nombre: string;
-  direccion: string;
-}
+import { Empresa } from 'src/app/shared/models/Empresa';
 
 @Component({
   selector: 'app-empresa',
@@ -23,9 +13,21 @@ export interface Empresa {
   styleUrls: ['./empresa.component.scss'],
 })
 export class EmpresaComponent implements OnInit {
-  private apiUrl = environment.apiUrl;
-  displayedColumns: string[] = ['Nombre', 'Direccion'];
+  displayedColumns: string[] = [
+    'Cif',
+    'Nombre',
+    'Direccion',
+    'Ciudad',
+    'Provincia',
+    'CodigoPostal',
+    'Pais',
+  ];
   columns = [
+    {
+      columnDef: 'Cif',
+      header: 'Cif',
+      cell: (element: Empresa) => `${element.cif}`,
+    },
     {
       columnDef: 'Nombre',
       header: 'Nombre',
@@ -35,6 +37,21 @@ export class EmpresaComponent implements OnInit {
       columnDef: 'Direccion',
       header: 'Direccion',
       cell: (element: Empresa) => `${element.direccion}`,
+    },
+    {
+      columnDef: 'Ciudad',
+      header: 'Ciudad',
+      cell: (element: Empresa) => `${element.ciudad}`,
+    },
+    {
+      columnDef: 'Provincia',
+      header: 'Provincia',
+      cell: (element: Empresa) => `${element.provincia}`,
+    },
+    {
+      columnDef: 'CodigoPostal',
+      header: 'Codigo Postal',
+      cell: (element: Empresa) => `${element.cp}`,
     },
   ];
   dataSource: MatTableDataSource<Empresa> = new MatTableDataSource<Empresa>([]);
@@ -55,7 +72,7 @@ export class EmpresaComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(this.dataSource);
+        console.log(res);
       },
       error: (err) => {
         alert('Error while fetching /Empresa/ReadAll records!');
@@ -71,21 +88,7 @@ export class EmpresaComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  filterBySubject() {
-    // let filterFunction = (data: Empleado
-    //     const Nombre = data.Nombre;
-    //     for (let i = 0; i < subjects.length; i++) {
-    //       if (subjects[i].indexOf(filter) != -1) {
-    //         return true;
-    //       }
-    //     }
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // };
-    // return filterFunction;
-  }
+
   openDialog(): void {
     this.dialog
       .open(DialogEmpresaComponent, {

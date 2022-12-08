@@ -4,9 +4,12 @@
   [formGroup]="loginFormulario"
   (ngSubmit)="login()"
 >
+  <div class="wrap-input100 m-b-23 image-container">
+    <img src="assets/images/TPVNubelogo.svg" alt="logo" />
+  </div>
   <div class="wrap-input100 m-b-23">
     <mat-form-field appearance="fill">
-      <mat-label>Nombre de usuario o correo electronico</mat-label>
+      <mat-label>Correo electronico</mat-label>
       <input matInput formControlName="email" />
     </mat-form-field>
   </div>
@@ -20,6 +23,11 @@
 
   <div class="text-right p-t-8 p-b-31"></div>
 
+  <div class="flex-col-c p-t-60 password-container">
+    <a routerLink="/auth/password" class="txt2">
+      ¿Ha olvidado la contraseña?
+    </a>
+  </div>
   <div class="container-login100-form-btn">
     <button
       class=""
@@ -32,10 +40,8 @@
       Acceder
     </button>
   </div>
-
-  <div class="flex-col-c p-t-60">
-    <a routerLink="/auth/registro" class="txt2">
-      ¿Ha olvidado la contraseña?
-    </a>
+  <div class="flex-col-c p-t-60 signup-container">
+    <span> ¿Crear cuenta? </span>
+    <a routerLink="/auth/signup" class="txt2"> inscribirse </a>
   </div>
 </form>

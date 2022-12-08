@@ -1,24 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { DialogEmpleadoComponent } from '../dialog-empleado/dialog-empleado.component';
 import {
   MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { ApiEmployeeService } from 'src/app/services/apiEmployee/api-employee.service';
-
-export interface Empleado {
-  DNI: string;
-  Nombre: string;
-  Apellidos: string;
-  Pass: string;
-  Foto: string;
-}
+import { Empleado } from 'src/app/shared/models/Empleado';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-empleados',
@@ -26,13 +16,20 @@ export interface Empleado {
   styleUrls: ['./empleados.component.scss'],
 })
 export class EmpleadosComponent implements OnInit {
-  private apiUrl = environment.apiUrl;
-  displayedColumns: string[] = ['DNI', 'Nombre', 'Apellidos', 'accion'];
+  displayedColumns: string[] = [
+    'Id',
+    'DNI',
+    'Nombre',
+    'Apellidos',
+    'Email',
+    'Negocio',
+    'accion',
+  ];
   columns = [
     {
       columnDef: 'DNI',
       header: 'Dni',
-      cell: (element: Empleado) => `${element.DNI}`,
+      cell: (element: Empleado) => `${element.Dni}`,
     },
     {
       columnDef: 'Nombre',
@@ -62,7 +59,6 @@ export class EmpleadosComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private http: HttpClient,
     private dialog: MatDialog,
     private apiEmployeeService: ApiEmployeeService
   ) {}
@@ -71,6 +67,20 @@ export class EmpleadosComponent implements OnInit {
   }
 
   //#region Employee API
+  getAllEmployees() {
+    this.apiEmployeeService.getList().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => {
+        alert(
+          err + 'Error while fetching Employees:/Empleado/ReadAll records!'
+        );
+      },
+    });
+  }
   editEmployee(row: any) {
     this.dialog
       .open(DialogEmpleadoComponent, {
@@ -84,52 +94,38 @@ export class EmpleadosComponent implements OnInit {
         }
       });
   }
-  getAllEmployees() {
-    this.apiEmployeeService.getList().subscribe({
-      next: (res) => {
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (err) => {
-        alert('Error while fetching Employees:/Empleado/ReadAll records!');
-      },
-    });
-  }
   deleteEmployee(id: number) {
-    this.apiEmployeeService.delete('p_empleado_oid', id).subscribe({
-      next: (res) => {
-        console.log('Employee eliminado');
-        this.getAllEmployees();
-      },
-      error: () => {
-        alert('Error al momento de eliminar employee');
-      },
+    
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Este empleado se eliminara definitivamente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiEmployeeService.delete('p_empleado_oid', id).subscribe({
+          next: (res) => {
+            Swal.fire('Eliminado!', 'Empleado se ha eliminado correctamente', 'success');
+            this.getAllEmployees();
+          },
+          error: (err) => {
+            alert(err + 'Error al momento de eliminar employee');
+          },
+        });
+        
+      }
     });
   }
   //#endregion
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toUpperCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-  filterBySubject() {
-    // let filterFunction = (data: Empleado
-    //     const Nombre = data.Nombre;
-    //     for (let i = 0; i < subjects.length; i++) {
-    //       if (subjects[i].indexOf(filter) != -1) {
-    //         return true;
-    //       }
-    //     }
-    //     return false;
-    //   } else {
-    //     return true;
-    //   }
-    // };
-    // return filterFunction;
   }
   openDialog(): void {
     this.dialog

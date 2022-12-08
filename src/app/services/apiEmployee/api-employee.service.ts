@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../apiService/api.service';
-import { Empleado } from '../../modules/empleados/empleados.component';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Empleado } from 'src/app/shared/models/Empleado';
+
+import { environment } from '../../../environments/environment.prod';
+import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiEmployeeService extends ApiService<Empleado> {
-  constructor(protected override httpClient: HttpClient) {
+  constructor(httpClient: HttpClient) {
     super(httpClient);
   }
   getResourceUrl(): string {
     return 'Empleado';
+  }
+  getAllEmpleadoByNegocio(id: string | number): Observable<Empleado[]> {
+    var endpoint = `${this.APIUrl}/GetAllEmpleadoByNegocio?idNegocio=${id}`;
+    return this.httpClient.get<Empleado[]>(`${endpoint}`).pipe(catchError(this.handleError));
   }
 }

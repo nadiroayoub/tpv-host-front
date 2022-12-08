@@ -1,0 +1,113 @@
+<form
+  class="login100-form"
+  autocomplete="off"
+  [formGroup]="signupFormulario"
+  (ngSubmit)="signup()"
+>
+  <div class="wrap-input100 m-b-23 image-container">
+    <img src="assets/images/TPVNubelogo.svg" alt="logo" />
+  </div>
+  <div class="nombre-apellido-container">
+    <div class="wrap-input100 m-b-23">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="Nombre" />
+      </mat-form-field>
+    </div>
+    <div class="wrap-input100 m-b-23">
+      <mat-form-field appearance="fill">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="Apellido" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="Dni" />
+    </mat-form-field>
+  </div>
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>Correo electronico</mat-label>
+      <input matInput formControlName="Email" />
+    </mat-form-field>
+    <app-error-message
+      [field]="signupFormulario.get('Email')"
+      error="required"
+      message="Correo electrónico es obligatorio"
+      style="display: block"
+    ></app-error-message>
+    <app-error-message
+      [field]="signupFormulario.get('Email')"
+      error="pattern"
+      message="correo electronico invalido"
+      style="display: block"
+    ></app-error-message>
+  </div>
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>Vuelve a introducir el correo electronico</mat-label>
+      <input matInput formControlName="DuplicatedEmail" />
+    </mat-form-field>
+    <app-error-message
+      [field]="signupFormulario.get('DuplicatedEmail')"
+      error="pattern"
+      message="correo electronico invalido"
+      style="display: block"
+    ></app-error-message>
+    <app-error-message
+      [field]="signupFormulario.get('DuplicatedEmail')"
+      error="required"
+      message="Correo electrónico es obligatorio"
+      style="display: block"
+    ></app-error-message>
+    <app-error-message
+      [field]="signupFormulario.get('DuplicatedEmail')"
+      error="MustMatch"
+      message="Los correo electrónicos deben coincidir"
+    ></app-error-message>
+  </div>
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña nueva</mat-label>
+      <input
+        matInput
+        formControlName="Pass"
+        [type]="hide ? 'password' : 'text'"
+      />
+      <mat-icon matSuffix (click)="hide = !hide">{{
+        hide ? "visibility_off" : "visibility"
+      }}</mat-icon>
+    </mat-form-field>
+    <app-error-message
+      [field]="signupFormulario.get('Pass')"
+      error="required"
+      message="Contraseña es obligatoria"
+      style="display: block"
+    ></app-error-message>
+    <app-error-message
+      [field]="signupFormulario.get('Pass')"
+      error="pattern"
+      message="La contraseña debe contener al menos un número, una mayúscula, un carácter especial y un letra minúscula y al menos 8 caracteres, la contraseña no puede contener espacios en blanco"
+      style="display: block"
+    ></app-error-message>
+  </div>
+  <div class="text-right p-t-8 p-b-31"></div>
+  <div class="container-login100-form-btn">
+    <button
+      class=""
+      mat-raised-button
+      type="submit"
+      color="primary"
+      style="margin-left: 8px"
+      [disabled]="signupFormulario.invalid"
+    >
+      Crear cuenta nueva
+    </button>
+  </div>
+  <div class="flex-col-c p-t-60 signup-container">
+    <span> ¿Tiene cuenta? </span>
+    <a routerLink="/auth/login" class="txt2"> Iniciar sesión </a>
+  </div>
+</form>

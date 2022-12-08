@@ -43,7 +43,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Codigo Postal
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.CodigoPostal }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Cp }} </mat-cell>
         </ng-container>
 
         <!-- Ciudad Column -->
@@ -68,11 +68,11 @@
             Accion
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            <!-- <button
+            <button
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="primary"
-              (click)="editEmployee(row)"
+              (click)="editNegocio(row)"
             >
               <mat-icon> edit </mat-icon>
             </button>
@@ -80,10 +80,10 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="warn"
-              (click)="deleteEmployee(row.DNI)"
+              (click)="deleteNegocio(row.Id)"
             >
               <mat-icon> delete </mat-icon>
-            </button> -->
+            </button>
           </mat-cell>
         </ng-container>
         <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

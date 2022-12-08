@@ -14,6 +14,14 @@
     </mat-form-field>
     <div class="example-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Cif Column -->
+        <ng-container matColumnDef="Cif">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Cif
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Cif }} </mat-cell>
+        </ng-container>
+
         <!-- Nombre Column -->
         <ng-container matColumnDef="Nombre">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -38,20 +46,20 @@
           <mat-cell *matCellDef="let row"> {{ row.Ciudad }} </mat-cell>
         </ng-container>
 
-        <!-- Cp Column -->
-        <ng-container matColumnDef="CodigoPostal">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Codigo Postal
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.CodigoPostal }} </mat-cell>
-        </ng-container>
-
-        <!-- Ciudad Column -->
+        <!-- Provincia Column -->
         <ng-container matColumnDef="Provincia">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Provincia
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.Provincia }} </mat-cell>
+        </ng-container>
+
+        <!-- Cp Column -->
+        <ng-container matColumnDef="CodigoPostal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Codigo Postal
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Cp }} </mat-cell>
         </ng-container>
 
         <!-- Pais Column -->
@@ -68,11 +76,11 @@
             Accion
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            <!-- <button
+            <button
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="primary"
-              (click)="editEmployee(row)"
+              (click)="editEmpresa(row)"
             >
               <mat-icon> edit </mat-icon>
             </button>
@@ -80,23 +88,15 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="warn"
-              (click)="deleteEmployee(row.DNI)"
+              (click)="deleteEmpresa(row.Id)"
             >
               <mat-icon> delete </mat-icon>
-            </button> -->
+            </button>
           </mat-cell>
         </ng-container>
-        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">
-            No Hay Datos que coincidan con el filtro
-          </td>
-        </tr> -->
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
       </table>
-
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </div>
