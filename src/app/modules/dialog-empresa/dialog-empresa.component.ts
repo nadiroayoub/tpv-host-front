@@ -12,6 +12,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-empresa',
@@ -21,6 +22,8 @@ import {
 export class DialogEmpresaComponent implements OnInit {
   empresaForm!: FormGroup;
   btnAccion: string = 'Guardar';
+  titleAccion: string = 'Agregar';
+
   constructor(
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public editData: any,
@@ -30,67 +33,86 @@ export class DialogEmpresaComponent implements OnInit {
 
   ngOnInit(): void {
     this.empresaForm = this.formBuilder.group({
-      dni: ['', Validators.required],
+      id: [''],
+      cif: ['', Validators.required],
       nombre: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      pass: ['', Validators.required],
-      rol: [''],
-      lugar: [''],
+      direccion: ['', Validators.required],
+      ciudad: ['', Validators.required],
+      provincia: ['', Validators.required],
+      cp: ['', Validators.required],
+      pais: ['', Validators.required],
+      email: ['', Validators.required],
+      fechaconstitucion: ['', Validators.required],
+      telefono: ['', Validators.required],
     });
-    console.log(this.editData);
+
     if (this.editData) {
-      this.btnAccion = 'Editar';
-      this.empresaForm.controls['dni'].setValue(this.editData.DNI);
+      this.titleAccion = this.btnAccion = 'Editar';
+      console.log(this.editData);
+      this.empresaForm.controls['id'].setValue(this.editData.Id);
+      this.empresaForm.controls['cif'].setValue(this.editData.Cif);
       this.empresaForm.controls['nombre'].setValue(this.editData.Nombre);
-      this.empresaForm.controls['apellidos'].setValue(this.editData.Apellidos);
+      this.empresaForm.controls['direccion'].setValue(this.editData.Direccion);
+      this.empresaForm.controls['ciudad'].setValue(this.editData.Ciudad);
+      this.empresaForm.controls['provincia'].setValue(this.editData.Provincia);
+      this.empresaForm.controls['pais'].setValue(this.editData.Pais);
+      this.empresaForm.controls['cp'].setValue(this.editData.Cp);
+      this.empresaForm.controls['email'].setValue(this.editData.Email);
+      this.empresaForm.controls['fechaconstitucion'].setValue(
+        this.editData.Fechaconstitucion
+      );
+      this.empresaForm.controls['telefono'].setValue(this.editData.Telefono);
     }
   }
-
-  addEmpleado(data: any) {
-    this.empresaForm.addControl(
-      'Foto',
-      new FormControl('', Validators.required)
-    );
-    this.empresaForm.addControl(
-      'Negocio_oid',
-      new FormControl(0, Validators.required)
-    );
-    this.empresaForm.removeControl('rol');
-    this.empresaForm.removeControl('lugar');
-    this.empresaForm.patchValue({
-      Foto: 'string',
-      Negocio_oid: 98304,
-    });
+  //#region Empresa API
+  addEmpresa(data: any) {
     if (!this.editData) {
       if (this.empresaForm.valid) {
         this.apiEmpresaService.add(this.empresaForm.value).subscribe({
           next: (res) => {
-            console.log('Empleado agregado');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: '¡Empresa creada!',
+              showConfirmButton: false,
+              timer: 3500,
+            });
             this.empresaForm.reset();
             this.dialogRef.close('Guardar');
           },
           error: () => {
-            alert('Error al momento de agregar un nuevo Empleado');
+            Swal.fire({
+              icon: 'error',
+              heightAuto: false,
+              title: '¡No se pudo crear un empresa!',
+            });
           },
         });
       }
     } else {
-      this.updateEmpleado(this.empresaForm.value.dni, this.empresaForm.value);
+      this.updateEmpresa(this.empresaForm.value.id, this.empresaForm.value);
     }
   }
-  updateEmpleado(id: string, data: any) {
+  updateEmpresa(id: string, data: any) {
     this.apiEmpresaService.update('idEmpresa', id, data).subscribe({
       next: (res) => {
-        console.log('Empresa modificado');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Empresa editado!',
+          showConfirmButton: false,
+          timer: 3500,
+        });
         this.empresaForm.reset();
         this.dialogRef.close('Editar');
       },
       error: () => {
-        alert('Error al momento de editar un nuevo Empresa');
+        alert('Error al momento de editar la Empresa');
       },
     });
   }
   getEmpresa() {
     return this.apiEmpresaService.getList();
   }
+  //#endregion
 }

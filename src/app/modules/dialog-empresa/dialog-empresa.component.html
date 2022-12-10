@@ -1,13 +1,32 @@
-<h1 mat-dialog-title>Agregar nueva empresa</h1>
+<h3 mat-dialog-title>{{ titleAccion }} empresa</h3>
 <div mat-dialog-content>
   <form [formGroup]="empresaForm">
     <mat-form-field appearance="outline">
+      <mat-label>CIF</mat-label>
+      <input
+        formControlName="cif"
+        matInput
+        placeholder="CIF"
+      /> </mat-form-field
+    ><mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
       <input formControlName="nombre" matInput placeholder="Nombre" />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Direccion</mat-label>
       <input formControlName="direccion" matInput placeholder="Direccion" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input formControlName="ciudad" matInput placeholder="Ciudad" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Provincia</mat-label>
+      <input formControlName="provincia" matInput placeholder="Provincia" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Codigo Postal</mat-label>
+      <input formControlName="cp" matInput placeholder="Codigo Postal" />
     </mat-form-field>
   </form>
 </div>
@@ -17,7 +36,7 @@
     style="margin-left: 8px"
     mat-raised-button
     color="primary"
-    (click)="addEmpleado($event)"
+    (click)="addEmpresa($event)"
   >
     {{ btnAccion }}
   </button>

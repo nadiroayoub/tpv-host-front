@@ -1,9 +1,11 @@
+@import "src/app/shared/utilities/variables";
+
 .header-page {
   display: flex;
   justify-content: space-between;
   align-items: center;
   .agregar-empleado {
-    background: #57ae51;
+    background: $main-color;
     border-radius: 15px;
     text-align: center;
     color: #ffffff;

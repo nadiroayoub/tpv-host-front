@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../apiService/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Negocio } from 'src/app/shared/models/Negocio';
+import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,5 +13,11 @@ export class ApiNegocioService extends ApiService<Negocio> {
   }
   getResourceUrl(): string {
     return 'Negocio';
+  }
+  getAllNegocioByEmpresa(id: string | number): Observable<Negocio[]> {
+    var endpoint = `${this.APIUrl}/GetAllNegocioByEmpresa?idEmpresa=${id}`;
+    return this.httpClient
+      .get<Negocio[]>(`${endpoint}`)
+      .pipe(catchError(this.handleError));
   }
 }

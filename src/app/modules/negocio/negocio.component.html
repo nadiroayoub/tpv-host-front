@@ -62,6 +62,14 @@
           <mat-cell *matCellDef="let row"> {{ row.Pais }} </mat-cell>
         </ng-container>
 
+        <!-- Empresa Column -->
+        <ng-container matColumnDef="Empresa">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Empresa
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Empresa.Nombre }} </mat-cell>
+        </ng-container>
+
         <!-- Accion Column -->
         <ng-container matColumnDef="accion">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -80,7 +88,7 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="warn"
-              (click)="deleteNegocio(row.Id)"
+              (click)="deleteNegocio(row.Id, row.Nombre)"
             >
               <mat-icon> delete </mat-icon>
             </button>

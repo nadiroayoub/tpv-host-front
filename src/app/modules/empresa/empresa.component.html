@@ -71,7 +71,7 @@
         </ng-container>
 
         <!-- Accion Column -->
-        <ng-container matColumnDef="accion">
+        <ng-container matColumnDef="Accion">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Accion
           </mat-header-cell>
@@ -88,7 +88,7 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="warn"
-              (click)="deleteEmpresa(row.Id)"
+              (click)="deleteEmpresa(row.Id, row.Nombre)"
             >
               <mat-icon> delete </mat-icon>
             </button>

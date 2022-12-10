@@ -23,6 +23,7 @@ export class NegocioComponent implements OnInit {
     'CodigoPostal',
     'Provincia',
     'Pais',
+    'Empresa',
     'accion',
   ];
   columns = [
@@ -97,37 +98,53 @@ export class NegocioComponent implements OnInit {
         }
       });
   }
-  deleteNegocio(id: number) {
+  deleteNegocio(id: number, nombre: string) {
     // Check if negocio have empleados
-    var empleadosByNegocio: any = [];
-    this.apiEmployeeService.getAllEmpleadoByNegocio(id).subscribe({
-      next: (res) => {
-        empleadosByNegocio = res == null ? []: res;
-        // Eliminar un negocio en caso de que no tenga empleados
-        if (empleadosByNegocio.length == 0) {
-          this.apiNegocioService.delete('p_negocio_oid', id).subscribe({
-            next: (res) => {
-              console.log('Negocio eliminado');
-              this.getAllNegocios();
-            },
-            error: (err) => {
-              alert(err + 'Error al momento de eliminar negocio');
-            },
-          });
-        }else{
-          Swal.fire({
-            icon: 'warning',
-            heightAuto: false,
-            title: '¡No se puede eliminar el negocio!',
-            text: 'Negocio tiene elementos relacionados.',
-          });
-        }
-      },
-      error: (err) => {
-        alert(err + 'Error al momento de devolver empleados de un negocio');
-      },
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Negocio se eliminará definitivamente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#57ae51',
+      cancelButtonColor: '#f44336',
+      confirmButtonText: '¡Sí, bórralo!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //#region Delete Element
+        this.apiEmployeeService.getAllEmpleadoByNegocio(id).subscribe({
+          next: (res) => {
+            var empleadosByNegocio = res == null ? [] : res;
+            // Eliminar un negocio en caso de que no tenga empleados
+            if (empleadosByNegocio.length == 0) {
+              this.apiNegocioService.delete('p_negocio_oid', id).subscribe({
+                next: (res) => {
+                  Swal.fire(
+                    'Eliminado!',
+                    `El negocio '${nombre}' se ha eliminado correctamente`,
+                    'success'
+                  );
+                  this.getAllNegocios();
+                },
+                error: (err) => {
+                  alert(err + 'Error al momento de eliminar negocio');
+                },
+              });
+            } else {
+              Swal.fire({
+                icon: 'warning',
+                heightAuto: false,
+                title: `¡No se pudo eliminar el negocio '${nombre}'!`,
+                text: `El negocio '${nombre}' tiene elementos relacionados.`,
+              });
+            }
+          },
+          error: (err) => {
+            alert(err + 'Error al momento de devolver empleados de un negocio');
+          },
+        });
+        //#endregion
+      }
     });
-
   }
   //#endregion
   //#region NEGOCIO DIALOG

@@ -8,10 +8,7 @@ import {
 } from '@angular/forms';
 import { ApiEmployeeService } from '../../services/apiEmployee/api-employee.service';
 import { ApiNegocioService } from '../../services/apiNegocio/api-negocio.service';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { Negocio } from 'src/app/shared/models/Negocio';
 
@@ -28,6 +25,7 @@ export class DialogEmpleadoComponent implements OnInit {
   nifNieRegex = /^[XYZ]?\d{5,8}[A-Z]$/;
   hide = true;
   hideConfirmPassword = true;
+  titleAccion: string = 'Agregar';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -70,7 +68,7 @@ export class DialogEmpleadoComponent implements OnInit {
       }
     );
     if (this.editData) {
-      this.btnAccion = 'Editar';
+      this.titleAccion = this.btnAccion = 'Editar';
       this.empleadoForm.controls['id'].setValue(this.editData.Id);
       this.empleadoForm.controls['dni'].setValue(this.editData.Dni);
       this.empleadoForm.controls['nombre'].setValue(this.editData.Nombre);
@@ -99,6 +97,7 @@ export class DialogEmpleadoComponent implements OnInit {
       }
     };
   }
+  //#region Empresa API
   getNegocios() {
     this.apiNegocioService.getList().subscribe({
       next: (res) => {
@@ -109,6 +108,9 @@ export class DialogEmpleadoComponent implements OnInit {
       },
     });
   }
+  //#endregion
+
+  //#region Empleado API
   addEmpleado(data: any) {
     this.empleadoForm.addControl(
       'Foto',
@@ -147,6 +149,13 @@ export class DialogEmpleadoComponent implements OnInit {
   updateEmpleado(id: string, data: any) {
     this.apiEmployeeService.update('idEmpleado', id, data).subscribe({
       next: (res) => {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '¡Empleado editado!',
+          showConfirmButton: false,
+          timer: 3500,
+        });
         this.empleadoForm.reset();
         this.dialogRef.close('Editar');
       },
@@ -158,4 +167,5 @@ export class DialogEmpleadoComponent implements OnInit {
   getEmpleados() {
     return this.apiEmployeeService.getList();
   }
+  //#endregion
 }

@@ -20,6 +20,7 @@ export class DialogNegocioComponent implements OnInit {
   negocioForm!: FormGroup;
   btnAccion: string = 'Guardar';
   empresas!: Empresa[];
+  titleAccion: string = 'Agregar';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +32,7 @@ export class DialogNegocioComponent implements OnInit {
 
   ngOnInit(): void {
     this.negocioForm = this.formBuilder.group({
+      id: [''],
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
       ciudad: ['', Validators.required],
@@ -40,7 +42,8 @@ export class DialogNegocioComponent implements OnInit {
       Empresa_oid: ['', Validators.required],
     });
     if (this.editData) {
-      this.btnAccion = 'Editar';
+      this.titleAccion = this.btnAccion = 'Editar';
+      this.negocioForm.controls['id'].setValue(this.editData.Id);
       this.negocioForm.controls['nombre'].setValue(this.editData.Nombre);
       this.negocioForm.controls['direccion'].setValue(this.editData.Direccion);
       this.negocioForm.controls['ciudad'].setValue(this.editData.Ciudad);
@@ -48,7 +51,7 @@ export class DialogNegocioComponent implements OnInit {
       this.negocioForm.controls['provincia'].setValue(this.editData.Provincia);
       this.negocioForm.controls['pais'].setValue(this.editData.Pais);
       this.negocioForm.controls['Empresa_oid'].setValue(
-        this.editData.Negocio.Id
+        this.editData.Empresa.Id
       );
     }
     this.getEmpresas();
@@ -87,24 +90,30 @@ export class DialogNegocioComponent implements OnInit {
             Swal.fire({
               icon: 'error',
               heightAuto: false,
-              title: 'No se puede crear un negocio',
+              title: '¡No se pudo crear un negocio!',
             });
           },
         });
       }
     } else {
-      this.updateNegocio(this.negocioForm.value.dni, this.negocioForm.value);
+      this.updateNegocio(this.negocioForm.value.id, this.negocioForm.value);
     }
   }
   updateNegocio(id: string, data: any) {
     this.apiNegocioService.update('idNegocio', id, data).subscribe({
       next: (res) => {
-        console.log('Negocio modificado');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '¡Negocio editado!',
+          showConfirmButton: false,
+          timer: 3500,
+        });
         this.negocioForm.reset();
         this.dialogRef.close('Editar');
       },
       error: () => {
-        alert('Error al momento de editar un nuevo Negocio');
+        alert('Error al momento de editar un Negocio');
       },
     });
   }
