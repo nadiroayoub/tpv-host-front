@@ -1,101 +1,92 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { DialogEmpleadoComponent } from '../dialog-empleado/dialog-empleado.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ApiEmployeeService } from 'src/app/services/apiEmployee/api-employee.service';
-import { Empleado } from 'src/app/shared/models/Empleado';
+import { ApiFacturaService } from 'src/app/services/apiFactura/api-factura.service';
+import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
+import { Cliente } from 'src/app/shared/models/Cliente';
 import Swal from 'sweetalert2';
+import { ApiClienteService } from '../../services/apiCliente/api-cliente.service';
+import { DialogClienteComponent } from '../dialog-cliente/dialog-cliente.component';
 
 @Component({
-  selector: 'app-empleados',
-  templateUrl: './empleados.component.html',
-  styleUrls: ['./empleados.component.scss'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.scss'],
 })
-export class EmpleadosComponent implements OnInit {
+export class ClienteComponent implements OnInit {
   displayedColumns: string[] = [
-    'Id',
     'DNI',
     'Nombre',
     'Apellidos',
-    'Email',
     'Negocio',
-    'Accion',
+    'accion',
   ];
   columns = [
     {
       columnDef: 'DNI',
-      header: 'Dni',
-      cell: (element: Empleado) => `${element.dni}`,
+      header: 'DNI',
+      cell: (element: Cliente) => `${element.dni}`,
     },
     {
       columnDef: 'Nombre',
       header: 'Nombre',
-      cell: (element: Empleado) => `${element.nombre}`,
+      cell: (element: Cliente) => `${element.nombre}`,
     },
     {
       columnDef: 'Apellidos',
       header: 'Apellidos',
-      cell: (element: Empleado) => `${element.apellidos}`,
-    },
-    {
-      columnDef: 'Pass',
-      header: 'Pass',
-      cell: (element: Empleado) => `${element.pass}`,
-    },
-    {
-      columnDef: 'Foto',
-      header: 'Foto',
-      cell: (element: Empleado) => `${element.foto}`,
+      cell: (element: Cliente) => `${element.apellidos}`,
     },
   ];
-  dataSource: MatTableDataSource<Empleado> = new MatTableDataSource<Empleado>(
-    []
-  );
+  dataSource: MatTableDataSource<Cliente> = new MatTableDataSource<Cliente>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(
     private dialog: MatDialog,
-    private apiEmployeeService: ApiEmployeeService
+    private apiNegocioService: ApiNegocioService,
+    private apiEmployeeService: ApiEmployeeService,
+    private apiFacturaService: ApiFacturaService,
+    private apiClienteService: ApiClienteService
   ) {}
+
   ngOnInit(): void {
-    this.getAllEmployees();
+    this.getAllClientes();
   }
 
-  //#region Employee API
-  getAllEmployees() {
-    this.apiEmployeeService.getList().subscribe({
+  //#region Negocio API
+  getAllClientes() {
+    this.apiClienteService.getList().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        console.log(res);
       },
       error: (err) => {
-        alert(
-          err + 'Error while fetching Employees:/Empleado/ReadAll records!'
-        );
+        alert('Error while fetching /Cliente/ReadAll records!');
       },
     });
   }
-  editEmployee(row: any) {
+  editCliente(row: any) {
     this.dialog
-      .open(DialogEmpleadoComponent, {
+      .open(DialogClienteComponent, {
         width: '30%',
         data: row,
       })
       .afterClosed()
       .subscribe((val) => {
         if (val === 'Editar') {
-          this.getAllEmployees();
+          this.getAllClientes();
         }
       });
   }
-  deleteEmployee(id: number, nombre: string) {
+  deleteCliente(id: number, nombre: string) {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Empleado se eliminará definitivamente',
+      text: 'Factura se eliminará definitivamente',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#57ae51',
@@ -103,23 +94,25 @@ export class EmpleadosComponent implements OnInit {
       confirmButtonText: '¡Sí, bórralo!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiEmployeeService.delete('p_empleado_oid', id).subscribe({
+        this.apiClienteService.delete('p_cliente_oid', id).subscribe({
           next: (res) => {
             Swal.fire(
               'Eliminado!',
-              `El empleado "${nombre}" se ha eliminado correctamente`,
+              `El cliente "${nombre}" se ha eliminado correctamente`,
               'success'
             );
-            this.getAllEmployees();
+            this.getAllClientes();
           },
           error: (err) => {
-            alert(err + 'Error al momento de eliminar employee');
+            alert(err + 'Error al momento de eliminar cliente');
           },
         });
       }
     });
   }
   //#endregion
+
+  //#region CLIENTE DIALOG
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toUpperCase();
@@ -129,14 +122,15 @@ export class EmpleadosComponent implements OnInit {
   }
   openDialog(): void {
     this.dialog
-      .open(DialogEmpleadoComponent, {
+      .open(DialogClienteComponent, {
         width: '30%',
       })
       .afterClosed()
       .subscribe((val) => {
         if (val === 'Guardar') {
-          this.getAllEmployees();
+          this.getAllClientes();
         }
       });
   }
+  //#endregion
 }

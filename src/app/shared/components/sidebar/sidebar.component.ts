@@ -15,6 +15,7 @@ export class SidebarComponent implements OnInit {
     'proveedores',
     'empleados',
     'negocios',
+    'clientes'
   ];
   constructor(private authService: AuthService) {}
 

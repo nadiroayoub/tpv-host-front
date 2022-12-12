@@ -97,7 +97,7 @@ export class DialogEmpleadoComponent implements OnInit {
       }
     };
   }
-  //#region Empresa API
+  //#region Negocios API
   getNegocios() {
     this.apiNegocioService.getList().subscribe({
       next: (res) => {

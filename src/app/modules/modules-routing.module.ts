@@ -7,6 +7,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { DefaultComponent } from '../layouts/default/default.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'negocios',
         component: NegociosComponent,
+      },
+      {
+        path: 'clientes',
+        component: ClientesComponent,
       },
       {
         path: 'perfil',

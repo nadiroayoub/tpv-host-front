@@ -39,6 +39,11 @@ import { DialogCajaComponent } from './dialog-caja/dialog-caja.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { DialogProveedorComponent } from './dialog-proveedor/dialog-proveedor.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { FacturaComponent } from './factura/factura.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { DialogFacturaComponent } from './dialog-factura/dialog-factura.component';
+import { DialogClienteComponent } from './dialog-cliente/dialog-cliente.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +62,12 @@ import { DialogProveedorComponent } from './dialog-proveedor/dialog-proveedor.co
     DialogCajaComponent,
     ProveedoresComponent,
     ProveedorComponent,
-    DialogProveedorComponent
+    DialogProveedorComponent,
+    ClientesComponent,
+    FacturaComponent,
+    ClienteComponent,
+    DialogFacturaComponent,
+    DialogClienteComponent
   ],
   imports: [
     CommonModule,

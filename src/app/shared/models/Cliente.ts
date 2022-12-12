@@ -1,11 +1,10 @@
 import { Negocio } from "./Negocio";
 
-export interface Empleado {
+// import { Duenyo } from './Duenyo';
+export interface Cliente {
+  idCliente: string;
   dni: string;
   nombre: string;
   apellidos: string;
-  email: string;
-  pass: string;
-  foto: string;
   negocio: Negocio;
 }
