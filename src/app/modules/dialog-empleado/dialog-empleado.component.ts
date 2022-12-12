@@ -7,10 +7,10 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ApiEmployeeService } from '../../services/apiEmployee/api-employee.service';
-import { ApiNegocioService } from '../../services/apiNegocio/api-negocio.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { Negocio } from 'src/app/shared/models/Negocio';
+import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
 
 @Component({
   selector: 'app-dialog-empleado',

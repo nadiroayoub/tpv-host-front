@@ -99,7 +99,7 @@ export class NegocioComponent implements OnInit {
       });
   }
   deleteNegocio(id: number, nombre: string) {
-    // Check if negocio have empleados
+    // Check if negocio has empleados
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Negocio se eliminará definitivamente',
@@ -147,6 +147,7 @@ export class NegocioComponent implements OnInit {
     });
   }
   //#endregion
+
   //#region NEGOCIO DIALOG
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

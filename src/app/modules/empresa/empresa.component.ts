@@ -8,7 +8,6 @@ import { DialogEmpresaComponent } from '../dialog-empresa/dialog-empresa.compone
 import { Empresa } from 'src/app/shared/models/Empresa';
 import Swal from 'sweetalert2';
 import { ApiNegocioService } from '../../services/apiNegocio/api-negocio.service';
-import { DialogNegocioComponent } from '../dialog-negocio/dialog-negocio.component';
 
 @Component({
   selector: 'app-empresa',

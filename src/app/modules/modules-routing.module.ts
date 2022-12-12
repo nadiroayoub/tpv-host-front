@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EmpleadosComponent } from './empleados/empleados.component';
-import { InventarioComponent } from './inventario/inventario.component';
 import { NegociosComponent } from './negocios/negocios.component';
 import { PanelDeControlComponent } from './panel-de-control/panel-de-control.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { DefaultComponent } from '../layouts/default/default.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
 
 const routes: Routes = [
   {
@@ -30,8 +30,8 @@ const routes: Routes = [
         component: EmpleadosComponent,
       },
       {
-        path: 'inventario',
-        component: InventarioComponent,
+        path: 'proveedores',
+        component: ProveedoresComponent,
       },
       {
         path: 'negocios',

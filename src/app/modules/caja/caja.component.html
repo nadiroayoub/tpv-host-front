@@ -1,8 +1,8 @@
 <!-- Header of page -->
 <div class="header-page">
-  <h3 style="font-weight: bold">Datos de los empleados</h3>
+  <h3 style="font-weight: bold">Datos de las cajas</h3>
   <button mat-button class="agregar-empleado" (click)="openDialog()">
-    Agregar empleado
+    Agregar caja
   </button>
 </div>
 
@@ -14,46 +14,28 @@
     </mat-form-field>
     <div class="example-container mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
-        <!-- Id Column -->
-        <ng-container matColumnDef="Id">
+        <!-- Descripcion Column -->
+        <ng-container matColumnDef="Descripcion">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Id
+            Descripcion
           </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            {{ row.Id }}
-          </mat-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Descripcion }} </mat-cell>
         </ng-container>
 
-        <!-- DNI Column -->
-        <ng-container matColumnDef="DNI">
+        <!-- Saldo Column -->
+        <ng-container matColumnDef="Saldo">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            DNI
+            Saldo
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.Dni }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Saldo }} </mat-cell>
         </ng-container>
 
-        <!-- Nombre Column -->
-        <ng-container matColumnDef="Nombre">
+        <!-- Fondo Column -->
+        <ng-container matColumnDef="Fondo">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Nombre
+            Fondo
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.Nombre }} </mat-cell>
-        </ng-container>
-
-        <!-- Apellidos Column -->
-        <ng-container matColumnDef="Apellidos">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Apellidos
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.Apellidos }} </mat-cell>
-        </ng-container>
-
-        <!-- Email Column -->
-        <ng-container matColumnDef="Email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Correo electronico
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.Email }} </mat-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Fondo }} </mat-cell>
         </ng-container>
 
         <!-- Negocio Column -->
@@ -63,6 +45,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.Negocio.Nombre }} </mat-cell>
         </ng-container>
+
         <!-- Accion Column -->
         <ng-container matColumnDef="Accion">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -73,7 +56,7 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="primary"
-              (click)="editEmployee(row)"
+              (click)="editCaja(row)"
             >
               <mat-icon> edit </mat-icon>
             </button>
@@ -81,7 +64,7 @@
               mat-button
               class="toggle-button-navbar mat-icon-button"
               color="warn"
-              (click)="deleteEmployee(row.Id, row.Nombre)"
+              (click)="deleteCaja(row.Id, row.Nombre)"
             >
               <mat-icon> delete </mat-icon>
             </button>
@@ -90,7 +73,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
       </table>
-
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
   </div>

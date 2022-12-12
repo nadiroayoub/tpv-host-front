@@ -10,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
-import { InventarioComponent } from './inventario/inventario.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,13 +34,17 @@ import { EmpresaComponent } from './empresa/empresa.component';
 import { DialogEmpresaComponent } from './dialog-empresa/dialog-empresa.component';
 import { ModulesRoutingModule } from './modules-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { CajaComponent } from './caja/caja.component';
+import { DialogCajaComponent } from './dialog-caja/dialog-caja.component';
+import { ProveedoresComponent } from './proveedores/proveedores.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
+import { DialogProveedorComponent } from './dialog-proveedor/dialog-proveedor.component';
 
 @NgModule({
   declarations: [
     VentasComponent,
     VentasComponent,
     EmpleadosComponent,
-    InventarioComponent,
     DialogEmpleadoComponent,
     NegociosComponent,
     PanelDeControlComponent,
@@ -50,6 +53,11 @@ import { ProfileComponent } from './profile/profile.component';
     EmpresaComponent,
     DialogEmpresaComponent,
     ProfileComponent,
+    CajaComponent,
+    DialogCajaComponent,
+    ProveedoresComponent,
+    ProveedorComponent,
+    DialogProveedorComponent
   ],
   imports: [
     CommonModule,

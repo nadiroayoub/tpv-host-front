@@ -3,7 +3,6 @@ import { ApiService } from '../apiService/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Empleado } from 'src/app/shared/models/Empleado';
 
-import { environment } from '../../../environments/environment.prod';
 import { catchError, Observable } from 'rxjs';
 
 @Injectable({

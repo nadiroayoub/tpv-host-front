@@ -5,11 +5,11 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
-import { ApiNegocioService } from '../../services/apiNegocio/api-negocio.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Empresa } from 'src/app/shared/models/Empresa';
 import { ApiEmpresaService } from 'src/app/services/apiEmpresa/api-empresa.service';
 import Swal from 'sweetalert2';
+import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
 
 @Component({
   selector: 'app-dialog-negocio',
