@@ -38,8 +38,20 @@
       ></app-error-message>
     </mat-form-field>
     <mat-form-field appearance="outline">
+      <mat-label>Correo electronico</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        placeholder="Correo electronico"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Negocio</mat-label>
-      <mat-select formControlName="Negocio_oid" placeholder="Negocio" value="Negocio_oid.value">
+      <mat-select
+        formControlName="Negocio_oid"
+        placeholder="Negocio"
+        value="Negocio_oid.value"
+      >
         <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
           {{ negocio.Nombre }}
         </mat-option>

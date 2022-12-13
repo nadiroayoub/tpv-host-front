@@ -160,7 +160,11 @@ export class DialogEmpleadoComponent implements OnInit {
         this.dialogRef.close('Editar');
       },
       error: () => {
-        alert('Error al momento de editar un Empleado');
+        Swal.fire({
+          icon: 'error',
+          heightAuto: false,
+          title: 'Correo electronico o DNI ya existen',
+        });
       },
     });
   }

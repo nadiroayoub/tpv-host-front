@@ -27,6 +27,7 @@
     "@types/highcharts": "^7.0.0",
     "firebase": "^9.11.0",
     "highcharts-angular": "^3.0.0",
+    "ngx-spinner": "^14.0.0",
     "rxjs": "~7.4.0",
     "sweetalert2": "^11.6.1",
     "tslib": "^2.3.0",

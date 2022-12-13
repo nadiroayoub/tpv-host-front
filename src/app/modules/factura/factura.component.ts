@@ -16,7 +16,13 @@ import { DialogFacturaComponent } from '../dialog-factura/dialog-factura.compone
   styleUrls: ['./factura.component.scss'],
 })
 export class FacturaComponent implements OnInit {
-  displayedColumns: string[] = ['Numero', 'Fecha', 'Precio', 'Descripcion'];
+  displayedColumns: string[] = [
+    'Numero',
+    'Fecha',
+    'Precio',
+    'Descripcion',
+    'accion',
+  ];
   columns = [
     {
       columnDef: 'Numero',
@@ -44,8 +50,6 @@ export class FacturaComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,
-    private apiNegocioService: ApiNegocioService,
-    private apiEmployeeService: ApiEmployeeService,
     private apiFacturaService: ApiFacturaService
   ) {}
 
@@ -101,7 +105,7 @@ export class FacturaComponent implements OnInit {
             this.getAllFacturas();
           },
           error: (err) => {
-            alert(err + 'Error al momento de eliminar employee');
+            alert(err + 'Error al momento de eliminar factura');
           },
         });
       }

@@ -5,10 +5,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-
 import { ModulesModule } from './modules/modules.module';
 import { DefaultModule } from './layouts/default/default.module';
-import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import {
+  CalendarModule,
+  DatePickerModule,
+  TimePickerModule,
+  DateRangePickerModule,
+  DateTimePickerModule,
+} from '@syncfusion/ej2-angular-calendars';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,9 +27,15 @@ import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModu
     ModulesModule,
     HttpClientModule,
     DefaultModule,
-    CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule
+    CalendarModule,
+    DatePickerModule,
+    TimePickerModule,
+    DateRangePickerModule,
+    DateTimePickerModule,
+    NgxSpinnerModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

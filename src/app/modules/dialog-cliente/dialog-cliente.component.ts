@@ -1,10 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { ApiCajaService } from 'src/app/services/apiCaja/api-caja.service';
@@ -40,17 +35,21 @@ export class DialogClienteComponent implements OnInit {
 
   ngOnInit(): void {
     this.clienteForm = this.formBuilder.group({
+      id: [''],
       dni: ['', [Validators.required, Validators.pattern(this.nifNieRegex)]],
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
+      email: [''],
       Negocio_oid: ['', Validators.required],
     });
     if (this.editData) {
       this.titleAccion = this.btnAccion = 'Editar';
+      console.log(this.editData);
       this.clienteForm.controls['id'].setValue(this.editData.Id);
-      this.clienteForm.controls['descripcion'].setValue(
-        this.editData.Descripcion
-      );
+      this.clienteForm.controls['dni'].setValue(this.editData.Dni);
+      this.clienteForm.controls['nombre'].setValue(this.editData.Nombre);
+      this.clienteForm.controls['apellidos'].setValue(this.editData.Apellidos);
+      this.clienteForm.controls['email'].setValue(this.editData.Email);
       this.clienteForm.controls['Negocio_oid'].setValue(
         this.editData.Negocio.Id
       );
@@ -75,16 +74,6 @@ export class DialogClienteComponent implements OnInit {
   //#endregion
   //#region Cliente API
   addCliente(data: any) {
-    // this.clienteForm.addControl(
-    //   'Foto',
-    //   new FormControl('', Validators.required)
-    // );
-    // this.clienteForm.controls['Duenyo_oid'].setValue(
-    //   this.authService.usuario.Id
-    // );
-    // this.clienteForm.patchValue({
-    //   Foto: 'string',
-    // });
     if (!this.editData) {
       if (this.clienteForm.valid) {
         console.log(this.clienteForm.value);
@@ -127,7 +116,11 @@ export class DialogClienteComponent implements OnInit {
         this.dialogRef.close('Editar');
       },
       error: () => {
-        alert('Error al momento de editar un Cliente');
+        Swal.fire({
+          icon: 'error',
+          heightAuto: false,
+          title: 'DNI ya existe',
+        });
       },
     });
   }

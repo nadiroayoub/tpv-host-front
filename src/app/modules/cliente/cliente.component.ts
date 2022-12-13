@@ -7,6 +7,7 @@ import { ApiEmployeeService } from 'src/app/services/apiEmployee/api-employee.se
 import { ApiFacturaService } from 'src/app/services/apiFactura/api-factura.service';
 import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
 import { Cliente } from 'src/app/shared/models/Cliente';
+import { Negocio } from 'src/app/shared/models/Negocio';
 import Swal from 'sweetalert2';
 import { ApiClienteService } from '../../services/apiCliente/api-cliente.service';
 import { DialogClienteComponent } from '../dialog-cliente/dialog-cliente.component';
@@ -21,6 +22,7 @@ export class ClienteComponent implements OnInit {
     'DNI',
     'Nombre',
     'Apellidos',
+    'Email',
     'Negocio',
     'accion',
   ];
@@ -31,14 +33,19 @@ export class ClienteComponent implements OnInit {
       cell: (element: Cliente) => `${element.dni}`,
     },
     {
-      columnDef: 'Nombre',
-      header: 'Nombre',
-      cell: (element: Cliente) => `${element.nombre}`,
-    },
-    {
       columnDef: 'Apellidos',
       header: 'Apellidos',
       cell: (element: Cliente) => `${element.apellidos}`,
+    },
+    {
+      columnDef: 'Email',
+      header: 'Correo electronico',
+      cell: (element: Cliente) => `${element.email}`,
+    },
+    {
+      columnDef: 'Negocio',
+      header: 'Negocio',
+      cell: (element: Negocio) => `${element.Nombre}`,
     },
   ];
   dataSource: MatTableDataSource<Cliente> = new MatTableDataSource<Cliente>([]);
@@ -46,23 +53,27 @@ export class ClienteComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,
-    private apiNegocioService: ApiNegocioService,
-    private apiEmployeeService: ApiEmployeeService,
     private apiFacturaService: ApiFacturaService,
     private apiClienteService: ApiClienteService
   ) {}
 
   ngOnInit(): void {
+    // activate filterpredicate to get the posibility to filter by object (negocio)
+    this.dataSource.filterPredicate = function (data: Cliente, filter: string) {
+      data.negocio.Nombre.toLocaleLowerCase().includes(filter);
+      return data.negocio.Nombre.toLocaleLowerCase().includes(filter);
+    };
     this.getAllClientes();
   }
 
-  //#region Negocio API
+  //#region Cliente API
   getAllClientes() {
     this.apiClienteService.getList().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        console.log('clientes');
         console.log(res);
       },
       error: (err) => {
@@ -86,7 +97,7 @@ export class ClienteComponent implements OnInit {
   deleteCliente(id: number, nombre: string) {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Factura se eliminará definitivamente',
+      text: 'Cliente se eliminará definitivamente',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#57ae51',
@@ -94,19 +105,39 @@ export class ClienteComponent implements OnInit {
       confirmButtonText: '¡Sí, bórralo!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiClienteService.delete('p_cliente_oid', id).subscribe({
+        //#region Delete Element
+        this.apiFacturaService.getAllFacturaOfCliente(id).subscribe({
           next: (res) => {
-            Swal.fire(
-              'Eliminado!',
-              `El cliente "${nombre}" se ha eliminado correctamente`,
-              'success'
-            );
-            this.getAllClientes();
+            var facturasByCliente = res == null ? [] : res;
+            // Eliminar un cliente en caso de que no tenga facturas
+            if (facturasByCliente.length == 0) {
+              this.apiClienteService.delete('p_cliente_oid', id).subscribe({
+                next: (res) => {
+                  Swal.fire(
+                    'Eliminado!',
+                    `La cliente '${nombre}' se ha eliminado correctamente`,
+                    'success'
+                  );
+                  this.getAllClientes();
+                },
+                error: (err) => {
+                  alert(err + 'Error al momento de eliminar cliente');
+                },
+              });
+            } else {
+              Swal.fire({
+                icon: 'warning',
+                heightAuto: false,
+                title: `¡No se pudo eliminar el cliente '${nombre}'!`,
+                text: `El cliente '${nombre}' tiene elementos relacionados.`,
+              });
+            }
           },
           error: (err) => {
-            alert(err + 'Error al momento de eliminar cliente');
+            alert(err + 'Error al momento de devolver facturas del cliente');
           },
         });
+        //#endregion
       }
     });
   }
