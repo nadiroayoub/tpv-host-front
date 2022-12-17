@@ -8,7 +8,11 @@
         width="120"
         height="120"
         class=""
-        [src]="usuario.Foto ?? 'assets/images/profile-placeholder.png'"
+        [src]="
+          profileImgUrl.url == ''
+            ? 'assets/images/profile-placeholder.png'
+            : profileImgUrl.url
+        "
       />
   </div>
   <mat-divider></mat-divider>

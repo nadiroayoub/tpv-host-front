@@ -106,6 +106,7 @@ export class ClienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         //#region Delete Element
+        console.log(id);
         this.apiFacturaService.getAllFacturaOfCliente(id).subscribe({
           next: (res) => {
             var facturasByCliente = res == null ? [] : res;

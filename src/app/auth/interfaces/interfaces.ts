@@ -1,7 +1,7 @@
 export interface AuthResponse {
   Id: string;
   Nombre: string;
-  Apellido: string;
+  Apellidos: string;
   Telefono: string;
   Email: string;
   Dni: string;
@@ -11,7 +11,7 @@ export interface AuthResponse {
 export interface Usuario {
   Id: string;
   Nombre: string;
-  Apellido: string;
+  Apellidos: string;
   Telefono: string;
   Email: string;
   Dni: string;

@@ -15,7 +15,7 @@ export class ApiFacturaService extends ApiService<Factura> {
     return 'Factura';
   }
   getAllFacturaOfCliente(id: string | number): Observable<Factura[]> {
-    var endpoint = `${this.APIUrl}/GetAllFacturaByCliente?idCliente=${id}`;
+    var endpoint = `${this.APIUrl}/GetAllFacturaOfCliente?idCliente=${id}`;
     return this.httpClient
       .get<Factura[]>(`${endpoint}`)
       .pipe(catchError(this.handleError));

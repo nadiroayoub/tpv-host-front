@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthResponse, Usuario } from '../interfaces/interfaces';
+import { ApiDuenyoService } from '../../services/apiDuenyo/api-duenyo.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,18 @@ import { AuthResponse, Usuario } from '../interfaces/interfaces';
 export class AuthService {
   private apiUrl: string = environment.apiUrl;
   private _usuario!: Usuario;
-
+  private _imageByte: string | object = '';
   get usuario() {
     return { ...this._usuario };
   }
+  get imageByte() {
+    return this._imageByte;
+  }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private apiDuenyoService: ApiDuenyoService
+  ) {}
 
   signup(formValue: any) {
     const url = `${this.apiUrl}/DuenyoAnonimo/nuevo`;
@@ -59,13 +66,23 @@ export class AuthService {
         this._usuario = {
           Id: resp.Id!,
           Nombre: resp.Nombre!,
-          Apellido: resp.Apellido!,
+          Apellidos: resp.Apellidos!,
           Telefono: resp.Telefono!,
           Email: resp.Email!,
           Dni: resp.Dni!,
           Pass: resp.Pass!,
           Foto: resp.Foto!,
         };
+        var filename = this._usuario.Foto.split('/').pop()!;
+        this.apiDuenyoService
+          .getImage(
+            this._usuario.Id,
+            filename.substring(0, filename.lastIndexOf('.'))
+          )
+          .subscribe((res) => {
+            this._usuario.Id, filename.substring(0, filename.lastIndexOf('.'));
+            this._imageByte = res;
+          });
         return true;
       }),
       catchError((err) => of(false))

@@ -8,6 +8,9 @@ import {
 import { ApiDuenyoService } from '../../services/apiDuenyo/api-duenyo.service';
 import { Usuario } from '../../auth/interfaces/interfaces';
 import { AuthService } from '../../auth/services/auth.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -21,14 +24,21 @@ export class ProfileComponent implements OnInit {
   hideConfirmPassword = true;
   emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   nifNieRegex = /^[XYZ]?\d{5,8}[A-Z]$/;
+  imageUploaded = '';
+  profileImgUrl: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private apiDuenyoService: ApiDuenyoService,
-    private authService: AuthService
+    private authService: AuthService,
+    public sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.usuario = this.authService.usuario;
+    console.log(this.usuario.Foto);
+    // this.profileImgUrl = 'data:image/png;base64,' + this.usuario.Foto;
     this.duenyoForm = this.formBuilder.group(
       {
         foto: [this.usuario.Foto, Validators.required],
@@ -37,7 +47,7 @@ export class ProfileComponent implements OnInit {
           [Validators.required, Validators.pattern(this.nifNieRegex)],
         ],
         nombre: [this.usuario.Nombre, Validators.required],
-        apellidos: [this.usuario.Apellido, Validators.required],
+        apellidos: [this.usuario.Apellidos, Validators.required],
         telefono: [this.usuario.Telefono],
         email: [
           this.usuario.Email,
@@ -66,6 +76,7 @@ export class ProfileComponent implements OnInit {
         validators: this.MustMatch('pass', 'duplicatePass'),
       }
     );
+    this.createProfileImage();
   }
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -83,11 +94,31 @@ export class ProfileComponent implements OnInit {
   }
   UpdateDuenyo() {
     const data = this.duenyoForm.value;
+    // const headers = new HttpHeaders().set(
+    //   'Authorization',
+    //   sessionStorage.getItem('token') || ''
+    // );
     this.apiDuenyoService
       .update('idDuenyo', this.authService.usuario.Id, data)
       .subscribe({
         next: (res) => {
-          console.log('Dueño modificado');
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '¡Dueño editado!',
+            showConfirmButton: false,
+            timer: 3500,
+          });
+          this.apiDuenyoService
+            .UpladImage(
+              this.usuario.Id,
+              this.imageUploaded,
+              this.duenyoForm.get('pass')?.value
+            )
+            .subscribe((res) => {
+              return res;
+            });
+          this.logout();
           this.duenyoForm.reset();
         },
         error: () => {
@@ -95,11 +126,44 @@ export class ProfileComponent implements OnInit {
         },
       });
   }
-  UploadProfilePicture(event: any, usuario: Usuario): any {
-    this.apiDuenyoService
-      .UpladImage(this.usuario.Id, event.target.files[0])
-      .subscribe((res) => {
-        return res;
-      });
+  onSelectFile(e: any, usuario: Usuario): any {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      this.imageUploaded = e.target.files[0];
+      reader.onload = (event: any) => {
+        this.profileImgUrl.url = event.target.result;
+      };
+    }
+  }
+  createProfileImage() {
+    const imageBlob = this.loadingImage(this.authService.imageByte.toString());
+    var fileName = this.usuario.Foto.split('/').pop()!;
+    const imageFile = new File(
+      [imageBlob],
+      fileName.substring(0, fileName.lastIndexOf('.'))
+    );
+    const finalFileHandle = {
+      file: imageFile,
+      url: this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(imageFile)
+      ),
+    };
+    console.log(finalFileHandle);
+    this.profileImgUrl = finalFileHandle;
+  }
+  loadingImage(imageType: string) {
+    const byteString = window.atob(this.authService.imageByte.toString());
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: imageType });
+    return blob;
+  }
+  logout() {
+    this.router.navigateByUrl('/auth');
+    this.authService.logout();
   }
 }

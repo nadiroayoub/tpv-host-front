@@ -6,7 +6,11 @@
         width="120"
         height="120"
         class=""
-        [src]="usuario.Foto ?? 'assets/images/profile-placeholder.png'"
+        [src]="
+          profileImgUrl.url == ''
+            ? 'assets/images/profile-placeholder.png'
+            : profileImgUrl.url
+        "
       />
       <button
         mat-mini-fab
@@ -21,7 +25,7 @@
       type="file"
       accept="image/*"
       hidden
-      (change)="UploadProfilePicture($event, usuario)"
+      (change)="onSelectFile($event, usuario)"
     />
     <!-- </mat-form-field> -->
     <div class="form-inputs">
@@ -156,6 +160,7 @@
         mat-raised-button
         color="primary"
         (click)="UpdateDuenyo()"
+        [disabled]="!duenyoForm.valid"
         class="btn-guardar"
       >
         Guardar
