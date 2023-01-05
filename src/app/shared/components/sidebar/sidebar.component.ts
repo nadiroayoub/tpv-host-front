@@ -27,10 +27,16 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = this.authService.usuario;
-    this.createProfileImage();
+    setTimeout(() => {
+      this.createProfileImage();
+    }, 500);
   }
   createProfileImage() {
-    const imageBlob = this.loadingImage(this.authService.imageByte.toString());
+    const imageBlob = this.loadingImage(
+      this.authService.imageByte != null
+        ? this.authService.imageByte.toString()
+        : ''
+    );
     var fileName = this.usuario.Foto.split('/').pop()!;
     const imageFile = new File(
       [imageBlob],
@@ -42,11 +48,14 @@ export class SidebarComponent implements OnInit {
         window.URL.createObjectURL(imageFile)
       ),
     };
-    console.log(finalFileHandle);
     this.profileImgUrl = finalFileHandle;
   }
   loadingImage(imageType: string) {
-    const byteString = window.atob(this.authService.imageByte.toString());
+    const byteString = window.atob(
+      this.authService.imageByte != null
+        ? this.authService.imageByte.toString()
+        : ''
+    );
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
     for (let i = 0; i < byteString.length; i++) {

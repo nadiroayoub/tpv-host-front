@@ -1,6 +1,10 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_gantt from 'highcharts/modules/gantt';
+import { ApiNegocioService } from '../../../services/apiNegocio/api-negocio.service';
+import { ApiCajaService } from '../../../services/apiCaja/api-caja.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-widget-area',
@@ -10,55 +14,106 @@ import HC_gantt from 'highcharts/modules/gantt';
 export class AreaComponent implements OnInit {
   chartOptions = {};
   Highcharts = Highcharts;
-  constructor() {}
+  negocios = [];
+  series: { name: string; data: any[] }[] = [];
+
+  constructor(
+    private apiNegocioService: ApiNegocioService,
+    private apiCajaService: ApiCajaService
+  ) {}
 
   ngOnInit(): void {
-    this.chartOptions = {
-      chart: {
-        type: 'area',
-      },
-      title: {
-        text: 'Ventas',
-      },
-      subtitle: {
-        text: 'By: Time',
-      },
-      tooltip: {
-        split: true,
-        valueSuffix: ' euros',
-      },
-      credits: {
-        enabled: false,
-      },
-      exporting: {
-        enabled: true,
-      },
-      series: [
-        {
-          name: 'Restaurante X',
-          data: [57000, 63500, 80900, 94700, 14020, 36340, 52680],
-        },
-        {
-          name: 'Restaurante Y',
-          data: [10600, 10700, 11100, 13300, 22100, 76700, 17660],
-        },
-        {
-          name: 'Restaurante Z',
-          data: [16300, 20300, 27600, 40800, 54700, 72900, 62800],
-        },
-        {
-          name: 'Restaurante K',
-          data: [18000, 31000, 54000, 15600, 33900, 81800, 120100],
-        },
-        {
-          name: 'Restaurante H',
-          data: [54800, 25200, 48000, 65400, 13100, 30005, 46780],
-        },
-      ],
-    };
-    HC_gantt(Highcharts);
+    this.apiNegocioService.getList().subscribe((res: any) => {
+      this.negocios = res;
+    });
+    // await until loadDiagram data loaded
+    this.loadDiagram();
+    // setTimeout(() => {
+    //   for (let i = 0; i < this.series.length; i++) {
+    //     // for every serie data, we need to add datetime
+    //     var newData: any = [];
+    //     this.series[i].data.forEach((element: number[], key) => {
+    //       var elem = [];
+    //       elem.push(element);
+    //       elem
+    //         .unshift
+    //         // Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + key)
+    //         ();
+    //       newData.push(elem);
+    //     });
+    //     this.series[i].data = newData;
+    //   }
+    // }, 3000);
     setTimeout(() => {
-      window.dispatchEvent(new Event('resize'));
-    }, 300);
+      this.chartOptions = {
+        chart: {
+          type: 'column',
+        },
+        title: {
+          text: 'Saldo por caja',
+        },
+        xAxis: {
+          tickInterval: 1,
+          labels: {
+            enabled: true,
+            formatter: function () {},
+          },
+        },
+        yAxis: {
+          title: {
+            text: 'Saldo',
+          },
+        },
+        plotOptions: {
+          column: {
+            pointPadding: 0.2,
+            borderWidth: 0,
+          },
+        },
+        tooltip: {
+          backgroundColor: '#e2f2f9',
+          borderColor: 'none',
+          borderRadius: 0,
+          borderWidth: 0,
+          headerFormat:
+            '<b>{point.point.name}</b></br>Saldo:{point.point.y}</br>',
+          pointFormat: '',
+        },
+        series: this.series,
+      };
+      Highcharts.chart('container', this.chartOptions);
+    }, 500);
+  }
+  last7Days() {
+    const dates = [...Array(7)].map((_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - i - 1);
+      return d;
+    });
+    return dates;
+  }
+  async loadDiagram() {
+    this.apiNegocioService.getList().subscribe((res) => {
+      // var d = new Date();
+      // d.setDate(d.getDate() - 7);
+      var series;
+      res.forEach(async (negocio, index) => {
+        // check if negocio has caja
+        this.series.push({ name: negocio.Nombre, data: [] });
+        (async () => {
+          const data = await this.apiCajaService
+            .dameCajaPorNegocio(negocio.Id)
+            .subscribe((res) => {
+              var seriesCajaData: any[] = [];
+              res.forEach((caja) => {
+                seriesCajaData.push([caja.Descripcion, caja.Saldo]);
+              });
+              this.series[index].data = seriesCajaData;
+              console.log(this.series);
+            });
+        })();
+      });
+    });
+    return this.series;
   }
 }

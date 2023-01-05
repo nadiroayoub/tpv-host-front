@@ -32,7 +32,8 @@ export class LoginComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           heightAuto: false,
-          title: 'Usuario no existe',
+          title:
+            'El correo electronico o la contraseña no son correctos. Inténtelo de nuevo ',
         });
       }
     });

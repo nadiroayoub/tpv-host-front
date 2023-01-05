@@ -30,8 +30,8 @@ export class SignupComponent implements OnInit {
       {
         Dni: [''],
         Nombre: ['', [Validators.required]],
-        Apellido: ['', [Validators.required]],
-        Telefono: [''],
+        Apellidos: ['', [Validators.required]],
+        Telefono: [' '],
         Pass: [
           '',
           [

@@ -7,9 +7,9 @@
         height="120"
         class=""
         [src]="
-          profileImgUrl.url == ''
+          profileImgUrl?.url == ''
             ? 'assets/images/profile-placeholder.png'
-            : profileImgUrl.url
+            : profileImgUrl?.url
         "
       />
       <button

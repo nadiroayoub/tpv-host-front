@@ -20,4 +20,10 @@ export class ApiNegocioService extends ApiService<Negocio> {
       .get<Negocio[]>(`${endpoint}`)
       .pipe(catchError(this.handleError));
   }
+  DameCobrosPorCiudad(ciudad: string) {
+    var endpoint = `${this.APIUrl}/DameCobrosPorCiudad?p_ciudad=${ciudad}`;
+    return this.httpClient
+      .get<number>(`${endpoint}`)
+      .pipe(catchError(this.handleError));
+  }
 }

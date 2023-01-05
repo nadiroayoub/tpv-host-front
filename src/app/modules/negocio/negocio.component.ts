@@ -40,7 +40,7 @@ export class NegocioComponent implements OnInit {
     {
       columnDef: 'Ciudad',
       header: 'Ciudad',
-      cell: (element: Negocio) => `${element.Cuidad}`,
+      cell: (element: Negocio) => `${element.Ciudad}`,
     },
     {
       columnDef: 'Codigo postal',

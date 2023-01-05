@@ -7,5 +7,5 @@ export interface Empleado {
   email: string;
   pass: string;
   foto: string;
-  negocio: Negocio;
+  negocioEmpleado: Negocio;
 }

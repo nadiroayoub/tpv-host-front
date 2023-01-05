@@ -5,15 +5,15 @@
       <h4>{{ this.usuario.Email }}</h4>
     </div>
     <img
-        width="120"
-        height="120"
-        class=""
-        [src]="
-          profileImgUrl.url == ''
-            ? 'assets/images/profile-placeholder.png'
-            : profileImgUrl.url
-        "
-      />
+      width="120"
+      height="120"
+      class=""
+      [src]="
+        profileImgUrl?.url == ''
+          ? 'assets/images/profile-placeholder.png'
+          : profileImgUrl?.url
+      "
+    />
   </div>
   <mat-divider></mat-divider>
   <a

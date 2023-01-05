@@ -77,6 +77,9 @@ export class ProfileComponent implements OnInit {
       }
     );
     this.createProfileImage();
+    this.duenyoForm.valueChanges.subscribe((selectedValue) => {
+      console.log(this.duenyoForm.value);
+    });
   }
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -94,10 +97,6 @@ export class ProfileComponent implements OnInit {
   }
   UpdateDuenyo() {
     const data = this.duenyoForm.value;
-    // const headers = new HttpHeaders().set(
-    //   'Authorization',
-    //   sessionStorage.getItem('token') || ''
-    // );
     this.apiDuenyoService
       .update('idDuenyo', this.authService.usuario.Id, data)
       .subscribe({
@@ -132,12 +131,17 @@ export class ProfileComponent implements OnInit {
       reader.readAsDataURL(e.target.files[0]);
       this.imageUploaded = e.target.files[0];
       reader.onload = (event: any) => {
+        this.duenyoForm.controls['foto'].setValue(' ');
         this.profileImgUrl.url = event.target.result;
       };
     }
   }
   createProfileImage() {
-    const imageBlob = this.loadingImage(this.authService.imageByte.toString());
+    const imageBlob = this.loadingImage(
+      this.authService.imageByte != null
+        ? this.authService.imageByte.toString()
+        : ''
+    );
     var fileName = this.usuario.Foto.split('/').pop()!;
     const imageFile = new File(
       [imageBlob],
@@ -153,7 +157,11 @@ export class ProfileComponent implements OnInit {
     this.profileImgUrl = finalFileHandle;
   }
   loadingImage(imageType: string) {
-    const byteString = window.atob(this.authService.imageByte.toString());
+    const byteString = window.atob(
+      this.authService.imageByte != null
+        ? this.authService.imageByte.toString()
+        : ''
+    );
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
     for (let i = 0; i < byteString.length; i++) {
