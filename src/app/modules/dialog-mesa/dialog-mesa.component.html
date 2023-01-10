@@ -1,0 +1,52 @@
+<h3 mat-dialog-title>{{ titleAccion }} empleado</h3>
+<div mat-dialog-content>
+  <form [formGroup]="mesaForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Numero</mat-label>
+      <input formControlName="numero" matInput placeholder="Numero" />
+      <!-- <app-error-message
+        [field]="cajaForm.get('descripcion')"
+        error="required"
+        message="Descripcion es obligatoria"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select
+        formControlName="Estado_oid"
+        placeholder="Estado"
+        disabled
+      >
+        <mat-option *ngFor="let estado of estados" [value]="estado">
+          {{ EstadoMesa[estado] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Negocio</mat-label>
+      <mat-select
+        formControlName="Negocio_oid"
+        placeholder="Negocio"
+        value="Negocio_oid.value"
+      >
+        <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
+          {{ negocio.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!mesaForm.valid"
+    (click)="addMesa($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

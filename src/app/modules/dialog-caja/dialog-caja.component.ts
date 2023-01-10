@@ -58,13 +58,13 @@ export class DialogCajaComponent implements OnInit {
       this.cajaForm.controls['descripcion'].setValue(this.editData.Descripcion);
       this.cajaForm.controls['fondo'].setValue(this.editData.Fondo);
       this.cajaForm.controls['saldo'].setValue(this.editData.Saldo);
-      this.cajaForm.controls['Negocio_oid'].setValue(this.editData.Negocio.Id);
+      this.cajaForm.controls['Negocio_oid'].setValue(
+        this.editData.NegocioCaja.Id
+      );
       this.cajaForm.controls['Duenyo_oid'].setValue(this.editData.Duenyo.Id);
     }
     this.getNegocios();
-    this.cajaForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.cajaForm.valid);
-    });
+    this.cajaForm.valueChanges.subscribe((selectedValue) => {});
   }
 
   //#region Caja API
@@ -80,7 +80,7 @@ export class DialogCajaComponent implements OnInit {
   }
   //#endregion
 
-  //#region Empleado API
+  //#region Caja API
   addCaja(data: any) {
     this.cajaForm.addControl('Foto', new FormControl('', Validators.required));
     this.cajaForm.controls['Duenyo_oid'].setValue(this.authService.usuario.Id);
@@ -89,7 +89,6 @@ export class DialogCajaComponent implements OnInit {
     });
     if (!this.editData) {
       if (this.cajaForm.valid) {
-        console.log(this.cajaForm.value);
         this.apiCajaService.add(this.cajaForm.value).subscribe({
           next: (res) => {
             Swal.fire({

@@ -16,6 +16,7 @@ export class SidebarComponent implements OnInit {
     'proveedores',
     'empleados',
     'negocios',
+    'Menús y Platos',
     'clientes',
   ];
   profileImgUrl: any;
@@ -48,7 +49,11 @@ export class SidebarComponent implements OnInit {
         window.URL.createObjectURL(imageFile)
       ),
     };
-    this.profileImgUrl = finalFileHandle;
+    if (fileName != '') {
+      this.profileImgUrl = finalFileHandle.url;
+    } else {
+      this.profileImgUrl = '';
+    }
   }
   loadingImage(imageType: string) {
     const byteString = window.atob(

@@ -17,7 +17,7 @@ export class ApiDuenyoService extends ApiService<Duenyo> {
   constructor(protected override httpClient: HttpClient) {
     super(httpClient);
   }
-  UpladImage(id: string, fileToUpload: any, password: string) {
+  UploadImage(id: string, fileToUpload: any, password: string) {
     // headers
     var header = {
       headers: new HttpHeaders().set(
@@ -28,7 +28,6 @@ export class ApiDuenyoService extends ApiService<Duenyo> {
 
     // fin headers
     var endpoint = `${this.apiUrl}/UploadImage`;
-    const strs = `${endpoint}?p_oid=${id}`;
     let formData: FormData = new FormData();
     formData.append('file', fileToUpload);
 
@@ -36,7 +35,6 @@ export class ApiDuenyoService extends ApiService<Duenyo> {
       .post(`${endpoint}?p_oid=${id}&p_pass=${password}`, formData, header)
       .pipe(
         catchError((err) => {
-          console.log('Upload error', err);
           return err;
         })
       );
@@ -53,13 +51,12 @@ export class ApiDuenyoService extends ApiService<Duenyo> {
       .put(`${endpoint}?${idName}=${id}`, resource, header)
       .pipe(catchError(this.handleError));
   }
-  getImage(
-    id: string | number,
-    imageName: string | number
-  ): Observable<string | object> {
+  // imageName: string | number
+  getImage(id: string | number): Observable<string | object> {
     var endpoint = `${this.APIUrl}/GetImage`;
+    // &imageName=${imageName}
     return this.httpClient
-      .get(`${endpoint}?id=${id}&imageName=${imageName}`)
+      .get(`${endpoint}?id=${id}`)
       .pipe(catchError(this.handleError));
   }
 }

@@ -73,8 +73,6 @@ export class ClienteComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log('clientes');
-        console.log(res);
       },
       error: (err) => {
         alert('Error while fetching /Cliente/ReadAll records!');
@@ -106,7 +104,7 @@ export class ClienteComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         //#region Delete Element
-        console.log(id);
+
         this.apiFacturaService.getAllFacturaOfCliente(id).subscribe({
           next: (res) => {
             var facturasByCliente = res == null ? [] : res;

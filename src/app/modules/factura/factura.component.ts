@@ -64,7 +64,6 @@ export class FacturaComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log('Facturas:' + this.dataSource);
       },
       error: (err) => {
         alert('Error while fetching /Factura/ReadAll records!');

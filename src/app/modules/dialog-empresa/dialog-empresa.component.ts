@@ -48,7 +48,7 @@ export class DialogEmpresaComponent implements OnInit {
 
     if (this.editData) {
       this.titleAccion = this.btnAccion = 'Editar';
-      console.log(this.editData);
+
       this.empresaForm.controls['id'].setValue(this.editData.Id);
       this.empresaForm.controls['cif'].setValue(this.editData.Cif);
       this.empresaForm.controls['nombre'].setValue(this.editData.Nombre);

@@ -76,11 +76,11 @@ export class AuthService {
         var filename = this._usuario.Foto.split('/').pop()!;
         this.apiDuenyoService
           .getImage(
-            this._usuario.Id,
-            filename.substring(0, filename.lastIndexOf('.'))
+            this._usuario.Id
           )
           .subscribe((res) => {
-            this._usuario.Id, filename.substring(0, filename.lastIndexOf('.'));
+            this._usuario.Id,
+              filename.substring(0, filename.lastIndexOf('.'));
             this._imageByte = res;
           });
         return true;

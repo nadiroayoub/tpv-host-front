@@ -75,13 +75,11 @@ export class DialogEmpleadoComponent implements OnInit {
       this.empleadoForm.controls['apellidos'].setValue(this.editData.Apellidos);
       this.empleadoForm.controls['email'].setValue(this.editData.Email);
       this.empleadoForm.controls['Negocio_oid'].setValue(
-        this.editData.Negocio.Id
+        this.editData.NegocioEmpleado.Id
       );
     }
     this.getNegocios();
-    this.empleadoForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.empleadoForm.valid);
-    });
+    this.empleadoForm.valueChanges.subscribe((selectedValue) => {});
   }
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {

@@ -25,64 +25,48 @@ export class AreaComponent implements OnInit {
   ngOnInit(): void {
     this.apiNegocioService.getList().subscribe((res: any) => {
       this.negocios = res;
-    });
-    // await until loadDiagram data loaded
-    this.loadDiagram();
-    // setTimeout(() => {
-    //   for (let i = 0; i < this.series.length; i++) {
-    //     // for every serie data, we need to add datetime
-    //     var newData: any = [];
-    //     this.series[i].data.forEach((element: number[], key) => {
-    //       var elem = [];
-    //       elem.push(element);
-    //       elem
-    //         .unshift
-    //         // Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + key)
-    //         ();
-    //       newData.push(elem);
-    //     });
-    //     this.series[i].data = newData;
-    //   }
-    // }, 3000);
-    setTimeout(() => {
-      this.chartOptions = {
-        chart: {
-          type: 'column',
-        },
-        title: {
-          text: 'Saldo por caja',
-        },
-        xAxis: {
-          tickInterval: 1,
-          labels: {
-            enabled: true,
-            formatter: function () {},
+      // await until loadDiagram data loaded
+      this.loadDiagram();
+      setTimeout(() => {
+        this.chartOptions = {
+          chart: {
+            type: 'column',
           },
-        },
-        yAxis: {
           title: {
-            text: 'Saldo',
+            text: 'Saldo por caja',
           },
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
+          xAxis: {
+            tickInterval: 1,
+            labels: {
+              enabled: true,
+              formatter: function () {},
+            },
+          },
+          yAxis: {
+            title: {
+              text: 'Saldo',
+            },
+          },
+          plotOptions: {
+            column: {
+              pointPadding: 0.2,
+              borderWidth: 0,
+            },
+          },
+          tooltip: {
+            backgroundColor: '#e2f2f9',
+            borderColor: 'none',
+            borderRadius: 0,
             borderWidth: 0,
+            headerFormat:
+              '<b>{point.point.name}</b></br>Saldo:{point.point.y}</br>',
+            pointFormat: '',
           },
-        },
-        tooltip: {
-          backgroundColor: '#e2f2f9',
-          borderColor: 'none',
-          borderRadius: 0,
-          borderWidth: 0,
-          headerFormat:
-            '<b>{point.point.name}</b></br>Saldo:{point.point.y}</br>',
-          pointFormat: '',
-        },
-        series: this.series,
-      };
-      Highcharts.chart('container', this.chartOptions);
-    }, 500);
+          series: this.series,
+        };
+        Highcharts.chart('container', this.chartOptions);
+      }, 500);
+    });
   }
   last7Days() {
     const dates = [...Array(7)].map((_, i) => {
@@ -105,11 +89,12 @@ export class AreaComponent implements OnInit {
             .dameCajaPorNegocio(negocio.Id)
             .subscribe((res) => {
               var seriesCajaData: any[] = [];
-              res.forEach((caja) => {
-                seriesCajaData.push([caja.Descripcion, caja.Saldo]);
-              });
+              if (res != null) {
+                res.forEach((caja) => {
+                  seriesCajaData.push([caja.Descripcion, caja.Saldo]);
+                });
+              }
               this.series[index].data = seriesCajaData;
-              console.log(this.series);
             });
         })();
       });

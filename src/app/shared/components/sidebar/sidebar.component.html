@@ -9,16 +9,16 @@
       height="120"
       class=""
       [src]="
-        profileImgUrl?.url == ''
+        profileImgUrl == ''
           ? 'assets/images/profile-placeholder.png'
-          : profileImgUrl?.url
+          : profileImgUrl
       "
     />
   </div>
   <mat-divider></mat-divider>
   <a
     mat-list-item
-    routerLinkActive="list-item-active"
+    routerLinkActive="list-item"
     routerLink="/dashboard/panelControl"
   >
     {{ navigationElements[0] | uppercase }}
@@ -48,8 +48,14 @@
   <a
     mat-list-item
     routerLinkActive="list-item"
-    routerLink="/dashboard/clientes"
+    routerLink="/dashboard/platosymenus"
     >{{ navigationElements[5] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/clientes"
+    >{{ navigationElements[6] | uppercase }}</a
   >
   <mat-divider></mat-divider>
 </mat-nav-list>

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { EmpleadosComponent } from './empleados/empleados.component';
+import { EmpleadoComponent } from './empleado/empleado.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -44,12 +45,24 @@ import { FacturaComponent } from './factura/factura.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { DialogFacturaComponent } from './dialog-factura/dialog-factura.component';
 import { DialogClienteComponent } from './dialog-cliente/dialog-cliente.component';
+import { MesaComponent } from './mesa/mesa.component';
+import { DialogMesaComponent } from './dialog-mesa/dialog-mesa.component';
+import { VariablePiePedidoProductoComponent } from './variable-pie-pedido-producto/variable-pie-pedido-producto.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { VariablePiePedidoMenuComponent } from './variable-pie-pedido-menu/variable-pie-pedido-menu.component';
+import { PlatosMenusComponent } from './platos-menus/platos-menus.component';
+import { PlatoComponent } from './plato/plato.component';
+import { MenuComponent } from './menu/menu.component';
+import { DialogMenuComponent } from './dialog-menu/dialog-menu.component';
+import { DialogPlatoComponent } from './dialog-plato/dialog-plato.component';
+import { EmpleadoComandasAreaComponent } from './empleado-comandas-area/empleado-comandas-area.component';
 
 @NgModule({
   declarations: [
     VentasComponent,
     VentasComponent,
     EmpleadosComponent,
+    EmpleadoComponent,
     DialogEmpleadoComponent,
     NegociosComponent,
     PanelDeControlComponent,
@@ -67,7 +80,17 @@ import { DialogClienteComponent } from './dialog-cliente/dialog-cliente.componen
     FacturaComponent,
     ClienteComponent,
     DialogFacturaComponent,
-    DialogClienteComponent
+    DialogClienteComponent,
+    MesaComponent,
+    DialogMesaComponent,
+    VariablePiePedidoProductoComponent,
+    VariablePiePedidoMenuComponent,
+    PlatosMenusComponent,
+    PlatoComponent,
+    MenuComponent,
+    DialogMenuComponent,
+    DialogPlatoComponent,
+    EmpleadoComandasAreaComponent,
   ],
   imports: [
     CommonModule,
@@ -94,6 +117,7 @@ import { DialogClienteComponent } from './dialog-cliente/dialog-cliente.componen
     MatGridListModule,
     LayoutModule,
     ModulesRoutingModule,
+    HighchartsChartModule,
   ],
   exports: [
     VentasComponent,

@@ -1,0 +1,94 @@
+<!-- Header of page -->
+<div class="header-page">
+  <h3 style="font-weight: bold">Datos de los platos</h3>
+  <button mat-button class="agregar-plato" (click)="openDialog()">
+    Agregar plato
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Nombre }} </mat-cell>
+        </ng-container>
+
+        <!-- Precio Column -->
+        <ng-container matColumnDef="Precio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Precio
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.Precio | currency : "EUR" : "symbol" }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Foto Column -->
+        <ng-container matColumnDef="Foto">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Foto
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <!-- <img [src]="row.Foto" /> -->
+            <img
+              [src]="
+                row.Foto == ''
+                  ? 'assets/images/no_image_available.png'
+                  : row.Foto
+              "
+              style="width: 55px; height: 55px"
+              alt=""
+            />
+          </mat-cell>
+        </ng-container>
+
+        <!-- Negocio Column -->
+        <ng-container matColumnDef="Negocio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Negocio
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.NegocioPlato.Nombre }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="Accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editPlato(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deletePlato(row.Id, row.Nombre)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

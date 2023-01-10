@@ -44,7 +44,7 @@ export class DialogClienteComponent implements OnInit {
     });
     if (this.editData) {
       this.titleAccion = this.btnAccion = 'Editar';
-      console.log(this.editData);
+
       this.clienteForm.controls['id'].setValue(this.editData.Id);
       this.clienteForm.controls['dni'].setValue(this.editData.Dni);
       this.clienteForm.controls['nombre'].setValue(this.editData.Nombre);
@@ -55,9 +55,7 @@ export class DialogClienteComponent implements OnInit {
       );
     }
     this.getNegocios();
-    this.clienteForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.clienteForm.valid);
-    });
+    this.clienteForm.valueChanges.subscribe((selectedValue) => {});
   }
 
   //#region Negocios API
@@ -76,7 +74,6 @@ export class DialogClienteComponent implements OnInit {
   addCliente(data: any) {
     if (!this.editData) {
       if (this.clienteForm.valid) {
-        console.log(this.clienteForm.value);
         this.apiClienteService.add(this.clienteForm.value).subscribe({
           next: (res) => {
             Swal.fire({

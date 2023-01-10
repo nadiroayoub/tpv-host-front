@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { ApiCobroService } from 'src/app/services/apiCobro/api-cobro.service';
 import { ApiNegocioService } from '../../../services/apiNegocio/api-negocio.service';
+import { Cobro } from '../../models/Cobro';
 
 @Component({
   selector: 'app-bar',
@@ -11,98 +12,86 @@ import { ApiNegocioService } from '../../../services/apiNegocio/api-negocio.serv
 export class BarComponent implements OnInit {
   public options: any;
   private ciudades: string[] = [];
-  private numeroCobrosPorCiudad: number[] = [];
+  private numeroCobrosPorNegocio: number[] = [];
+  private nombreNegocios: string[] = [];
   constructor(
     private apiNegocioService: ApiNegocioService,
     private apiCobroService: ApiCobroService
   ) {}
 
   ngOnInit(): void {
-    this.apiNegocioService.getList().subscribe((res) => {
-      res.forEach((negocio) => {
-        // get all ciudades
-        this.ciudades.push(negocio.Ciudad);
+    this.loadDiagramData();
+    setTimeout(() => {
+      this.options = {
+        chart: {
+          type: 'bar',
+        },
+        title: {
+          text: 'Cobros Por negocio',
+        },
+        xAxis: {
+          categories: this.nombreNegocios,
+          title: {
+            text: null,
+          },
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: '',
+            align: 'high',
+          },
+          labels: {
+            overflow: 'justify',
+          },
+        },
+        tooltip: {
+          valueSuffix: '',
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true,
+            },
+          },
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'top',
+          x: -40,
+          y: 80,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            Highcharts.defaultOptions.legend!.backgroundColor || '#FFFFFF',
+          shadow: true,
+        },
+        credits: {
+          enabled: false,
+        },
+        series: [
+          {
+            name: 'Numero de Cobros',
+            data: this.numeroCobrosPorNegocio,
+          },
+        ],
+      };
+      Highcharts.chart('container-bar', this.options);
+    }, 1000);
+  }
+  loadDiagramData() {
+    this.apiNegocioService.getList().subscribe((negocios) => {
+      negocios.forEach((negocio) => {
+        // push negocio to nombreNegocios
+        this.nombreNegocios.push(negocio.Nombre);
+        // this.ciudades.push(negocio.Ciudad);
+        this.apiCobroService
+          .dameCobroPorNegocio(negocio.Id)
+          .subscribe((cobros: Cobro[]) => {
+            this.numeroCobrosPorNegocio.push(cobros.length);
+          });
       });
-
-      var tempMap: any = {}; // keep track of unique objects with key mapping to the object's key&value
-      var distinctCiudades = []; // resulting list containing only unique objects
-      var obj: any = null;
-      for (var i = 0; i < this.ciudades.length; i++) {
-        obj = this.ciudades[i];
-        for (var key in obj) {
-          // look in the object eg. {'one':1}
-          if (obj.hasOwnProperty(key)) {
-            if (!tempMap.hasOwnProperty(key + obj[key])) {
-              // not in map
-              tempMap[key + obj[key]] = obj; // then add it to map
-              distinctCiudades.push(obj); // add it to our list of distinct objects
-            }
-            break;
-          }
-        }
-      }
-
-      this.apiCobroService
-        .DameCobrosPorCiudad(distinctCiudades)
-        .subscribe((res: number) => {
-          this.numeroCobrosPorCiudad.push(res);
-          this.options = {
-            chart: {
-              type: 'bar',
-            },
-            title: {
-              text: 'Cobros Por ciudad',
-            },
-            xAxis: {
-              categories: [this.ciudades[0]],
-              title: {
-                text: null,
-              },
-            },
-            yAxis: {
-              min: 0,
-              title: {
-                text: '',
-                align: 'high',
-              },
-              labels: {
-                overflow: 'justify',
-              },
-            },
-            tooltip: {
-              valueSuffix: '',
-            },
-            plotOptions: {
-              bar: {
-                dataLabels: {
-                  enabled: true,
-                },
-              },
-            },
-            legend: {
-              layout: 'vertical',
-              align: 'right',
-              verticalAlign: 'top',
-              x: -40,
-              y: 80,
-              floating: true,
-              borderWidth: 1,
-              backgroundColor:
-                Highcharts.defaultOptions.legend!.backgroundColor || '#FFFFFF',
-              shadow: true,
-            },
-            credits: {
-              enabled: false,
-            },
-            series: [
-              {
-                name: 'Cobros',
-                data: [this.numeroCobrosPorCiudad[0]],
-              },
-            ],
-          };
-          Highcharts.chart('container-bar', this.options);
-        });
     });
   }
 }

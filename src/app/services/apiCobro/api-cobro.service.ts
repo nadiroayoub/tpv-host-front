@@ -14,10 +14,10 @@ export class ApiCobroService extends ApiService<Cobro> {
   getResourceUrl(): string {
     return 'Cobro';
   }
-  DameCobrosPorCiudad(ciudades: string[]) {
-    var endpoint = `${this.APIUrl}/DameCobrosPorCiudades`;
+  dameCobroPorNegocio(negocioId: string) {
+    var endpoint = `${this.APIUrl}/DameCobroPorNegocio?p_negocio=${negocioId}`;
     return this.httpClient
-      .post<number>(`${endpoint}`, ciudades)
+      .get<Cobro[]>(`${endpoint}`)
       .pipe(catchError(this.handleError));
   }
 }

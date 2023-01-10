@@ -14,9 +14,7 @@ export class DefaultComponent implements OnInit {
   }
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    console.log(this.usuario);
-  }
+  ngOnInit(): void {}
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }

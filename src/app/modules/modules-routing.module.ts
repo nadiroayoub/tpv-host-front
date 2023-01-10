@@ -8,6 +8,7 @@ import { DefaultComponent } from '../layouts/default/default.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { PlatosMenusComponent } from './platos-menus/platos-menus.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: 'negocios',
         component: NegociosComponent,
+      },
+      {
+        path: 'platosymenus',
+        component: PlatosMenusComponent,
       },
       {
         path: 'clientes',

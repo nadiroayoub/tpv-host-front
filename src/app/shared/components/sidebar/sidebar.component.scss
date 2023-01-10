@@ -14,3 +14,25 @@
     }
   }
 }
+.list-item,
+.list-item-active {
+  background: rgb(57, 172, 82);
+  background: linear-gradient(
+    90deg,
+    rgba(57, 172, 82, 1) 0%,
+    rgba(20, 129, 38, 1) 100%
+  );
+  color: white;
+}
+
+.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:focus,
+.mat-list-option:focus {
+  background: rgb(57, 172, 82);
+  background: linear-gradient(
+    90deg,
+    rgba(57, 172, 82, 1) 0%,
+    rgba(20, 129, 38, 1) 100%
+  );
+  color: white;
+}

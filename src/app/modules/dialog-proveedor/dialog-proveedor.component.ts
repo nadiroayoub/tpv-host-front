@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { ApiProveedorService } from '../../services/ApiProveedor/api-proveedor.service';
@@ -41,9 +46,7 @@ export class DialogProveedorComponent implements OnInit {
       this.proveedorForm.controls['email'].setValue(this.editData.Email);
     }
     this.getProveedor();
-    this.proveedorForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.proveedorForm.valid);
-    });
+    this.proveedorForm.valueChanges.subscribe((selectedValue) => {});
   }
 
   //#region Proveedor API

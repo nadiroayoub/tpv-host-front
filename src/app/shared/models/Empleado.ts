@@ -1,4 +1,5 @@
 import { Negocio } from "./Negocio";
+import { Pedido } from './Pedido';
 
 export interface Empleado {
   dni: string;
@@ -8,4 +9,5 @@ export interface Empleado {
   pass: string;
   foto: string;
   negocioEmpleado: Negocio;
+  pedidos: Pedido[];
 }

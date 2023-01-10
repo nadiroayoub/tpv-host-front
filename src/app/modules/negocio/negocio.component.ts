@@ -78,7 +78,6 @@ export class NegocioComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(this.dataSource);
       },
       error: (err) => {
         alert('Error while fetching /Negocio/ReadAll records!');

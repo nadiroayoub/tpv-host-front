@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   nifNieRegex = /^[XYZ]?\d{5,8}[A-Z]$/;
   imageUploaded = '';
-  profileImgUrl: any;
+  profileImgUrl: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = this.authService.usuario;
-    console.log(this.usuario.Foto);
+
     // this.profileImgUrl = 'data:image/png;base64,' + this.usuario.Foto;
     this.duenyoForm = this.formBuilder.group(
       {
@@ -77,9 +77,6 @@ export class ProfileComponent implements OnInit {
       }
     );
     this.createProfileImage();
-    this.duenyoForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.duenyoForm.value);
-    });
   }
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -109,7 +106,7 @@ export class ProfileComponent implements OnInit {
             timer: 3500,
           });
           this.apiDuenyoService
-            .UpladImage(
+            .UploadImage(
               this.usuario.Id,
               this.imageUploaded,
               this.duenyoForm.get('pass')?.value
@@ -132,7 +129,7 @@ export class ProfileComponent implements OnInit {
       this.imageUploaded = e.target.files[0];
       reader.onload = (event: any) => {
         this.duenyoForm.controls['foto'].setValue(' ');
-        this.profileImgUrl.url = event.target.result;
+        this.profileImgUrl = event.target.result;
       };
     }
   }
@@ -153,8 +150,11 @@ export class ProfileComponent implements OnInit {
         window.URL.createObjectURL(imageFile)
       ),
     };
-    console.log(finalFileHandle);
-    this.profileImgUrl = finalFileHandle;
+    if (fileName != '') {
+      this.profileImgUrl = finalFileHandle.url;
+    } else {
+      this.profileImgUrl = '';
+    }
   }
   loadingImage(imageType: string) {
     const byteString = window.atob(

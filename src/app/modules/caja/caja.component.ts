@@ -39,7 +39,7 @@ export class CajaComponent implements OnInit {
       columnDef: 'Saldo',
       header: 'Saldo',
       cell: (element: Caja) => `${element.Saldo}`,
-    }
+    },
   ];
 
   dataSource: MatTableDataSource<Caja> = new MatTableDataSource<Caja>([]);
@@ -63,8 +63,6 @@ export class CajaComponent implements OnInit {
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(res);
-        
       },
       error: (err) => {
         alert('Error while fetching /Caja/ReadAll records!');

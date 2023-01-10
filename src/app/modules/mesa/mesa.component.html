@@ -1,0 +1,71 @@
+<!-- Header of page -->
+<div class="header-page">
+  <h3 style="font-weight: bold">Datos de las mesas</h3>
+  <button mat-button class="agregar-empleado" (click)="openDialog()">
+    Agregar mesa
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Descripcion Column -->
+        <ng-container matColumnDef="Numero">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Numero
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Numero }} </mat-cell>
+        </ng-container>
+
+        <!-- Saldo Column -->
+        <ng-container matColumnDef="Estado">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Estado
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Estado }} </mat-cell>
+        </ng-container>
+
+        <!-- Negocio Column -->
+        <ng-container matColumnDef="Negocio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Negocio
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.NegocioMesa.Nombre }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="Accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editMesa(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deleteMesa(row.Id, row.Numero)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

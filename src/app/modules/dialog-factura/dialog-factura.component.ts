@@ -45,7 +45,7 @@ export class DialogFacturaComponent implements OnInit {
     });
     if (this.editData) {
       this.titleAccion = this.btnAccion = 'Editar';
-      console.log(this.editData);
+
       this.facturaForm.controls['id'].setValue(this.editData.Id);
       this.facturaForm.controls['numero'].setValue(this.editData.numero);
       this.facturaForm.controls['fecha'].setValue(this.editData.fecha);
@@ -58,9 +58,7 @@ export class DialogFacturaComponent implements OnInit {
       );
     }
     this.getNegocios();
-    this.facturaForm.valueChanges.subscribe((selectedValue) => {
-      console.log(this.facturaForm.valid);
-    });
+    this.facturaForm.valueChanges.subscribe((selectedValue) => {});
   }
 
   //#region Negocios API
