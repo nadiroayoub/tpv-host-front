@@ -115,7 +115,7 @@ export class ProfileComponent implements OnInit {
               return res;
             });
           this.logout();
-          this.duenyoForm.reset();
+          // this.duenyoForm.reset();
         },
         error: () => {
           alert('Error al momento de editar un Dueño');

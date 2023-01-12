@@ -47,11 +47,15 @@ export class VariablePiePedidoMenuComponent implements OnInit {
             headerFormat: '',
             pointFormat: '{point.name} <br/> <b>Pedidos: {point.y}</b>',
           },
+          plotOptions: {
+            pie: {
+              size: 220,
+            },
+          },
           series: [
             {
               name: 'Platos',
               colorByPoint: true,
-
               data: this.data,
             },
           ],
