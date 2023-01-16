@@ -1,9 +1,14 @@
-<h3 mat-dialog-title>{{titleAccion}} empleado</h3>
+<h3 mat-dialog-title>{{ titleAccion }} empleado</h3>
 <div mat-dialog-content>
   <form [formGroup]="empleadoForm">
     <mat-form-field appearance="outline">
       <mat-label>DNI</mat-label>
-      <input formControlName="dni" matInput placeholder="Dni" />
+      <input
+        formControlName="dni"
+        matInput
+        placeholder="Dni"
+        [disabled]="titleAccion == 'Agregar' ? false : true"
+      />
       <app-error-message
         [field]="empleadoForm.get('dni')"
         error="required"
@@ -61,7 +66,11 @@
     </div>
     <mat-form-field appearance="outline">
       <mat-label>Negocio</mat-label>
-      <mat-select formControlName="Negocio_oid" placeholder="Negocio" value="Negocio_oid.value">
+      <mat-select
+        formControlName="Negocio_oid"
+        placeholder="Negocio"
+        value="Negocio_oid.value"
+      >
         <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
           {{ negocio.Nombre }}
         </mat-option>
