@@ -1,0 +1,29 @@
+.header-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .agregar-empleado {
+    background: #57ae51;
+    border-radius: 15px;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    float: right;
+    cursor: pointer;
+  }
+}
+table.mat-table {
+  table-layout: fixed;
+  width: 100%;
+  display: table;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+td,
+th {
+  width: 25%;
+}

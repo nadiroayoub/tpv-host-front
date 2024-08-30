@@ -1,0 +1,57 @@
+<h3 mat-dialog-title>{{ titleAccion }} menú</h3>
+<div mat-dialog-content>
+  <form [formGroup]="menuForm">
+    <div class="mat-form-field-imagen">
+      <button type="button" mat-raised-button (click)="fileInput.click()">
+        Cargar imagen
+      </button>
+      <input hidden (change)="onSelectFile($event)" #fileInput type="file" />
+      <span class="file-name">{{ selectedFile?.name }}</span>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre" />
+      <!-- <app-error-message
+        [field]="menuForm.get('descripcion')"
+        error="required"
+        message="Descripcion es obligatoria"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input formControlName="precio" matInput placeholder="Precio" />
+      <!-- <app-error-message
+        [field]="menuForm.get('fondo')"
+        error="required"
+        message="Fondo es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Negocio</mat-label>
+      <mat-select
+        formControlName="Negocio_oid"
+        placeholder="Negocio"
+        value="Negocio_oid.value"
+      >
+        <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
+          {{ negocio.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!menuForm.valid"
+    (click)="addMenu($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

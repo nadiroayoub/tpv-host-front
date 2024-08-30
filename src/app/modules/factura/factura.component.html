@@ -1,0 +1,89 @@
+<!-- Header of page -->
+<div class="header-page">
+  <h3 style="font-weight: bold">Datos de las facturas</h3>
+  <button mat-button class="agregar-empleado" (click)="openDialog()">
+    Agregar factura
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Numero Column -->
+        <ng-container matColumnDef="Numero">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Numero
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Numero }} </mat-cell>
+        </ng-container>
+
+        <!-- Fecha Column -->
+        <ng-container matColumnDef="Fecha">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fecha
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.Fecha | date : "short" }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Precio Column -->
+        <ng-container matColumnDef="Precio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Precio
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Precio }} </mat-cell>
+        </ng-container>
+
+        <!-- Descripcion Column -->
+        <ng-container matColumnDef="Descripcion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Descripción
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Descripcion }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editFactura(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deleteFactura(row.Id, row.Numero)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No Hay Datos que coincidan con el filtro
+          </td>
+        </tr> -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

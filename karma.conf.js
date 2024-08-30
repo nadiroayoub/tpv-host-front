@@ -25,7 +25,11 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
+<<<<<<< HEAD
       dir: require('path').join(__dirname, './coverage/tpv-host'),
+=======
+      dir: require('path').join(__dirname, './coverage/admin-dashboard'),
+>>>>>>> main
       subdir: '.',
       reporters: [
         { type: 'html' },

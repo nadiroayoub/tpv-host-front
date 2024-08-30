@@ -1,12 +1,20 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
+<<<<<<< HEAD
     "analytics": "82599def-0d9c-41bb-a032-fc8069891e07"
+=======
+    "analytics": "4d6c1c26-e045-4f8b-8917-2008b684f6e0"
+>>>>>>> main
   },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+<<<<<<< HEAD
     "tpv-host": {
+=======
+    "adminDashboard": {
+>>>>>>> main
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,18 +31,30 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+<<<<<<< HEAD
             "outputPath": "dist/tpv-host",
+=======
+            "outputPath": "dist/admin-dashboard",
+>>>>>>> main
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+<<<<<<< HEAD
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
               "src/styles.scss"
+=======
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
+>>>>>>> main
             ],
             "scripts": []
           },
@@ -43,8 +63,13 @@
               "budgets": [
                 {
                   "type": "initial",
+<<<<<<< HEAD
                   "maximumWarning": "500kb",
                   "maximumError": "1mb"
+=======
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+>>>>>>> main
                 },
                 {
                   "type": "anyComponentStyle",
@@ -73,12 +98,22 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+<<<<<<< HEAD
           "configurations": {
             "production": {
               "browserTarget": "tpv-host:build:production"
             },
             "development": {
               "browserTarget": "tpv-host:build:development"
+=======
+
+          "configurations": {
+            "production": {
+              "browserTarget": "adminDashboard:build:production"
+            },
+            "development": {
+              "browserTarget": "adminDashboard:build:development"
+>>>>>>> main
             }
           },
           "defaultConfiguration": "development"
@@ -86,7 +121,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
+<<<<<<< HEAD
             "browserTarget": "tpv-host:build"
+=======
+            "browserTarget": "adminDashboard:build"
+>>>>>>> main
           }
         },
         "test": {
@@ -97,18 +136,30 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
+<<<<<<< HEAD
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
               "src/styles.scss"
+=======
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
+>>>>>>> main
             ],
             "scripts": []
           }
         }
       }
     }
+<<<<<<< HEAD
   },
   "defaultProject": "tpv-host"
+=======
+  }
+>>>>>>> main
 }

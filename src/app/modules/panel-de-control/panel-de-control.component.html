@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="ventas">
+    <app-widget-area></app-widget-area>
+  </div>
+  <!-- <div class="calendario">
+    <app-calendar></app-calendar>
+  </div> -->
+  <div class="actividades">
+    <app-column></app-column>
+  </div>
+  <div class="nuevos-empleados">
+    <h3
+      class="nuevos-empleados__text"
+      style="text-align: center; margin-top: 1rem"
+    >
+      Empleados
+    </h3>
+    <mat-card
+      class="example-card"
+      *ngFor="let empleado of empleadosList; let i = index"
+    >
+      <mat-card-header>
+        <!-- url('" + tmp_path + "')" -->
+        <div
+          mat-card-avatar
+          class="example-header-image"
+          [style.background-image]="
+            'url(' +
+            (empleadoFotos[i] == ''
+              ? 'assets/images/profile-placeholder.png'
+              : empleadoFotos[i] ) +
+            ')'
+          "
+        ></div>
+        <!-- [ngStyle]="{ 'background-image': 'url(' + {{empleado.Foto}} + ')' }" -->
+        <!-- [style.background-image]="'url({empleado.Foto})'" -->
+        <mat-card-title>{{
+          empleado.Nombre | titlecase : true
+        }}</mat-card-title>
+        <mat-card-subtitle>{{ empleado.Dni }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  </div>
+  <div class="mejor-rendimientos">
+    <app-bar></app-bar>
+  </div>
+</div>

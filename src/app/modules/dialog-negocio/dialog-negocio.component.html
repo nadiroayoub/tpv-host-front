@@ -1,0 +1,85 @@
+<h3 mat-dialog-title>{{titleAccion}} negocio</h3>
+<div mat-dialog-content>
+  <form [formGroup]="negocioForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre" />
+      <app-error-message
+        [field]="negocioForm.get('nombre')"
+        error="required"
+        message="Nombre es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input formControlName="direccion" matInput placeholder="Dirección" />
+      <app-error-message
+        [field]="negocioForm.get('direccion')"
+        error="required"
+        message="Dirección es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ciudad</mat-label>
+      <input formControlName="ciudad" matInput placeholder="Ciudad" />
+      <app-error-message
+        [field]="negocioForm.get('ciudad')"
+        error="required"
+        message="Ciudad es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Código Postal</mat-label>
+      <input formControlName="cp" matInput placeholder="Código Postal" />
+      <app-error-message
+        [field]="negocioForm.get('cp')"
+        error="required"
+        message="Código Postal es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Provincia</mat-label>
+      <input formControlName="provincia" matInput placeholder="Provincia" />
+       <app-error-message
+        [field]="negocioForm.get('provincia')"
+        error="required"
+        message="Provincia es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>País</mat-label>
+      <input formControlName="pais" matInput placeholder="Pais" />
+       <app-error-message
+        [field]="negocioForm.get('pais')"
+        error="required"
+        message="Pais es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Empresa</mat-label>
+      <mat-select formControlName="Empresa_oid" placeholder="Empresa">
+        <mat-option *ngFor="let empresa of empresas" [value]="empresa.Id">
+          {{ empresa.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!negocioForm.valid"
+    (click)="addNegocio($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

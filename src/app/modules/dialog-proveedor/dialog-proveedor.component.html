@@ -1,0 +1,58 @@
+<h3 mat-dialog-title>{{ titleAccion }} proveedor</h3>
+<div mat-dialog-content>
+  <form [formGroup]="proveedorForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Telefono</mat-label>
+      <input
+        type="tel"
+        formControlName="telefono"
+        matInput
+        placeholder="Telefono"
+      />
+      <!-- <app-error-message
+        [field]="proveedorForm.get('nombre')"
+        error="required"
+        message="Nombre es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Correo electrónico </mat-label>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="Correo Electronico"
+        />
+        <app-error-message
+          [field]="proveedorForm.get('email')"
+          error="required"
+          message="Correo electrónico es obligatorio"
+          style="display: block"
+        ></app-error-message>
+        <app-error-message
+          [field]="proveedorForm.get('email')"
+          error="pattern"
+          message="correo electronico invalido"
+          style="display: block"
+        ></app-error-message>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!proveedorForm.valid"
+    (click)="addProveedor($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

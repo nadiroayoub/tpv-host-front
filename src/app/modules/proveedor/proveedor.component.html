@@ -1,0 +1,71 @@
+<!-- Header of page -->
+<div class="header-page">
+  <h3 style="font-weight: bold">Datos de los proveedores</h3>
+  <button mat-button class="agregar-empleado" (click)="openDialog()">
+    Agregar proveedor
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Nombre }} </mat-cell>
+        </ng-container>
+
+        <!-- Telefono Column -->
+        <ng-container matColumnDef="Telefono">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Telefono
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Telefono }} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="Email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Correo electrónico
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Email }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="Accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editEmpresa(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deleteEmpresa(row.Id, row.Nombre)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

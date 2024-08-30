@@ -1,0 +1,47 @@
+<h3 mat-dialog-title>{{ titleAccion }} caja</h3>
+<div mat-dialog-content>
+  <form [formGroup]="cajaForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Descripcion</mat-label>
+      <input formControlName="descripcion" matInput placeholder="Descripcion" />
+      <!-- <app-error-message
+        [field]="cajaForm.get('descripcion')"
+        error="required"
+        message="Descripcion es obligatoria"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fondo</mat-label>
+      <input formControlName="fondo" matInput placeholder="Fondo" />
+      <!-- <app-error-message
+        [field]="cajaForm.get('fondo')"
+        error="required"
+        message="Fondo es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Negocio</mat-label>
+      <mat-select formControlName="Negocio_oid" placeholder="Negocio" value="Negocio_oid.value">
+        <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
+          {{ negocio.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+    </div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!cajaForm.valid"
+    (click)="addCaja($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

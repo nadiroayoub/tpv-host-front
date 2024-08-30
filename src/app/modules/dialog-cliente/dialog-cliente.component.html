@@ -1,0 +1,74 @@
+<h3 mat-dialog-title>{{ titleAccion }} cliente</h3>
+<div mat-dialog-content>
+  <form [formGroup]="clienteForm">
+    <mat-form-field appearance="outline">
+      <mat-label>DNI</mat-label>
+      <input formControlName="dni" matInput placeholder="DNI" />
+      <app-error-message
+        [field]="clienteForm.get('dni')"
+        error="required"
+        message="DNI es obligatorio"
+        style="display: block"
+      ></app-error-message
+      ><app-error-message
+        [field]="clienteForm.get('dni')"
+        error="pattern"
+        message="DNI no es válido"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput placeholder="Nombre" />
+      <app-error-message
+        [field]="clienteForm.get('nombre')"
+        error="required"
+        message="Nombre es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Apellidos</mat-label>
+      <input formControlName="apellidos" matInput placeholder="Apellidos" />
+      <app-error-message
+        [field]="clienteForm.get('apellidos')"
+        error="required"
+        message="Apellidos es obligatorio"
+        style="display: block"
+      ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electronico</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        placeholder="Correo electronico"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Negocio</mat-label>
+      <mat-select
+        formControlName="Negocio_oid"
+        placeholder="Negocio"
+        value="Negocio_oid.value"
+      >
+        <mat-option *ngFor="let negocio of negocios" [value]="negocio.Id">
+          {{ negocio.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!clienteForm.valid"
+    (click)="addCliente($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

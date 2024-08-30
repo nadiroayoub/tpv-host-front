@@ -1,0 +1,64 @@
+<h3 mat-dialog-title>{{ titleAccion }} empleado</h3>
+<div mat-dialog-content>
+  <form [formGroup]="facturaForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Numero</mat-label>
+      <input formControlName="numero" matInput placeholder="Numero" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input formControlName="fecha" matInput placeholder="Fecha" />
+      <!-- <app-error-message
+        [field]="facturaForm.get('fondo')"
+        error="required"
+        message="Fondo es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input formControlName="precio" matInput placeholder="Precio" />
+      <!-- <app-error-message
+        [field]="facturaForm.get('fondo')"
+        error="required"
+        message="Fondo es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Descripcion</mat-label>
+      <input formControlName="descripcion" matInput placeholder="Descripcion" />
+      <!-- <app-error-message
+        [field]="facturaForm.get('fondo')"
+        error="required"
+        message="Fondo es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Cliente</mat-label>
+      <mat-select
+        formControlName="Cliente_oid"
+        placeholder="Cliente"
+        value="Cliente_oid.value"
+      >
+        <mat-option *ngFor="let cliente of clientes" [value]="cliente.Id">
+          {{ cliente.Nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div></div>
+  </form>
+</div>
+<div class="buttons" mat-dialog-action [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+  <button
+    style="margin-left: 8px"
+    mat-raised-button
+    color="primary"
+    [disabled]="!facturaForm.valid"
+    (click)="addFactura($event)"
+  >
+    {{ btnAccion }}
+  </button>
+</div>

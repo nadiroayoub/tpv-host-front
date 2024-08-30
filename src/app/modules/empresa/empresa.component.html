@@ -1,0 +1,103 @@
+<!-- Header of page -->
+<div class="header-page">
+  <h3 style="font-weight: bold">Datos de las empresas</h3>
+  <button mat-button class="agregar-empleado" (click)="openDialog()">
+    Agregar empresa
+  </button>
+</div>
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <!-- Body of page -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Cif Column -->
+        <ng-container matColumnDef="Cif">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Cif
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Cif }} </mat-cell>
+        </ng-container>
+
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Nombre }} </mat-cell>
+        </ng-container>
+
+        <!-- Direccion Column -->
+        <ng-container matColumnDef="Direccion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Direccion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Direccion }} </mat-cell>
+        </ng-container>
+
+        <!-- Ciudad Column -->
+        <ng-container matColumnDef="Ciudad">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Ciudad
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Ciudad }} </mat-cell>
+        </ng-container>
+
+        <!-- Provincia Column -->
+        <ng-container matColumnDef="Provincia">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Provincia
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Provincia }} </mat-cell>
+        </ng-container>
+
+        <!-- Cp Column -->
+        <ng-container matColumnDef="CodigoPostal">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Codigo Postal
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Cp }} </mat-cell>
+        </ng-container>
+
+        <!-- Pais Column -->
+        <ng-container matColumnDef="Pais">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Pais
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Pais }} </mat-cell>
+        </ng-container>
+
+        <!-- Accion Column -->
+        <ng-container matColumnDef="Accion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Accion
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="primary"
+              (click)="editEmpresa(row)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button
+              mat-button
+              class="toggle-button-navbar mat-icon-button"
+              color="warn"
+              (click)="deleteEmpresa(row.Id, row.Nombre)"
+            >
+              <mat-icon> delete </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

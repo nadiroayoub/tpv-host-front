@@ -1,0 +1,47 @@
+<form
+  class="login100-form"
+  autocomplete="off"
+  [formGroup]="loginFormulario"
+  (ngSubmit)="login()"
+>
+  <div class="wrap-input100 m-b-23 image-container">
+    <img src="assets/images/TPVNubelogo.svg" alt="logo" />
+  </div>
+  <div class="wrap-input100 m-b-23">
+    <mat-form-field appearance="fill">
+      <mat-label>Correo electronico</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+  </div>
+
+  <div class="wrap-input100">
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" />
+    </mat-form-field>
+  </div>
+
+  <div class="text-right p-t-8 p-b-31"></div>
+
+  <div class="flex-col-c p-t-60 password-container">
+    <a routerLink="/auth/password" class="txt2">
+      ¿Ha olvidado la contraseña?
+    </a>
+  </div>
+  <div class="container-login100-form-btn">
+    <button
+      class=""
+      mat-raised-button
+      type="submit"
+      color="primary"
+      style="margin-left: 8px"
+      [disabled]="loginFormulario.invalid"
+    >
+      Acceder
+    </button>
+  </div>
+  <div class="flex-col-c p-t-60 signup-container">
+    <span> ¿Crear cuenta? </span>
+    <a routerLink="/auth/signup" class="txt2"> inscribirse </a>
+  </div>
+</form>

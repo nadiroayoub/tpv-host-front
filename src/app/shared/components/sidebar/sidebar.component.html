@@ -1,0 +1,61 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <h2>{{ this.usuario.Nombre }}</h2>
+      <h4>{{ this.usuario.Email }}</h4>
+    </div>
+    <img
+      width="120"
+      height="120"
+      class=""
+      [src]="
+        profileImgUrl == ''
+          ? 'assets/images/profile-placeholder.png'
+          : profileImgUrl
+      "
+    />
+  </div>
+  <mat-divider></mat-divider>
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/panelControl"
+  >
+    {{ navigationElements[0] | uppercase }}
+  </a>
+  <a mat-list-item routerLinkActive="list-item" routerLink="/dashboard/ventas">
+    {{ navigationElements[1] | uppercase }}
+  </a>
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/proveedores"
+  >
+    {{ navigationElements[2] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/empleados"
+    >{{ navigationElements[3] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/negocios"
+    >{{ navigationElements[4] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/platosymenus"
+    >{{ navigationElements[5] | uppercase }}</a
+  >
+  <a
+    mat-list-item
+    routerLinkActive="list-item"
+    routerLink="/dashboard/clientes"
+    >{{ navigationElements[6] | uppercase }}</a
+  >
+  <mat-divider></mat-divider>
+</mat-nav-list>
