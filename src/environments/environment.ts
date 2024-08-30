@@ -4,11 +4,7 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
-  apiUrl: 'http://apitfm.ddns.net:8065/swagger/ui/index#/'
-=======
-  apiUrl: 'http://localhost:16209/api',
->>>>>>> main
+  apiUrl: 'http://localhost:16210/api',
 };
 
 /*

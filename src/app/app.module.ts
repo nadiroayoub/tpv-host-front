@@ -1,23 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-<<<<<<< HEAD
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-@NgModule({
-  declarations: [
-  ],
-  imports: [
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-=======
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,4 +39,3 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
->>>>>>> main

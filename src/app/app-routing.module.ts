@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-<<<<<<< HEAD
-
-const routes: Routes = [];
-=======
 import { ValidarTokenGuard } from './guards/validar-token.guard';
 
 const routes: Routes = [
@@ -23,7 +19,6 @@ const routes: Routes = [
     redirectTo: 'auth',
   },
 ];
->>>>>>> main
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -16,25 +16,14 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-<<<<<<< HEAD
-    "target": "es2017",
-=======
     "target": "es2020",
->>>>>>> main
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-<<<<<<< HEAD
-    "strictTemplates": true
-=======
     "strictTemplates": false
->>>>>>> main
   }
 }
