@@ -2,11 +2,11 @@
 <div mat-dialog-content>
   <form [formGroup]="empleadoForm">
     <mat-form-field appearance="outline">
-      <mat-label>DNI</mat-label>
+      <mat-label>DNI/NIE</mat-label>
       <input
         formControlName="dni"
         matInput
-        placeholder="Dni"
+        placeholder="DNI/NIE"
         [disabled]="titleAccion == 'Agregar' ? false : true"
       />
       <app-error-message
@@ -41,6 +41,16 @@
         message="Apellidos es obligatorio"
         style="display: block"
       ></app-error-message>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Telefono</mat-label>
+      <input formControlName="telefono" matInput placeholder="Telefono" />
+      <!-- <app-error-message
+        [field]="empleadoForm.get('apellidos')"
+        error="required"
+        message="Apellidos es obligatorio"
+        style="display: block"
+      ></app-error-message> -->
     </mat-form-field>
     <div>
       <mat-form-field appearance="outline">

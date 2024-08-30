@@ -106,6 +106,7 @@ export class EmpresaComponent implements OnInit {
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
       confirmButtonText: '¡Sí, bórralo!',
+      heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         //#region Delete Element

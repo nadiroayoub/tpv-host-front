@@ -24,7 +24,9 @@ export class PanelDeControlComponent implements OnInit {
     this.apiEmployeeService.getList().subscribe({
       next: (res) => {
         res.forEach((empleado: any) => {
-          this.empleadoFotos.push(this.convertUrl(empleado.Foto));
+          
+            this.empleadoFotos.push(this.convertUrl(empleado.Id, empleado.Foto));
+          
         });
         this.empleadosList = res;
       },
@@ -34,11 +36,14 @@ export class PanelDeControlComponent implements OnInit {
     });
   }
 
-  convertUrl(absoluteUtlFoto: string) {
+  convertUrl(empleadoId: number, absoluteUtlFoto: string) {
+    //get imageByte
+    var imageByte: any;
+    this.apiEmployeeService.getImage(empleadoId).subscribe((res) => {
+      imageByte = res;
+    });
     const imageBlob = this.loadingImage(
-      this.authService.imageByte != null
-        ? this.authService.imageByte.toString()
-        : ''
+      imageByte != null ? imageByte.toString() : ''
     );
     var fileName = absoluteUtlFoto.split('/').pop()!;
     const imageFile = new File(
@@ -51,9 +56,10 @@ export class PanelDeControlComponent implements OnInit {
         window.URL.createObjectURL(imageFile)
       ),
     };
+    var relativeImgUrl;
     if (fileName != '') {
-      var relativeImgUrl = URL.createObjectURL(imageBlob);
-      // relativeImgUrl = finalFileHandle.url;
+      relativeImgUrl = URL.createObjectURL(imageBlob);
+      // relativeImgUrl = 'x';
     } else {
       relativeImgUrl = '';
     }

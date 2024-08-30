@@ -103,6 +103,7 @@ export class DialogMesaComponent implements OnInit {
               title: '¡Mesa creada!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
             this.mesaForm.reset();
             this.dialogRef.close('Guardar');
@@ -129,6 +130,7 @@ export class DialogMesaComponent implements OnInit {
           title: '¡Mesa editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.mesaForm.reset();
         this.dialogRef.close('Editar');

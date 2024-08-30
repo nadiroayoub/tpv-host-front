@@ -100,7 +100,17 @@ export class DialogMenuComponent implements OnInit {
               title: '¡Menu creada!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
+            this.apiMenuService
+              .UploadImage(
+                res.Id,
+                this.imageUploaded,
+                this.menuForm.get('pass')?.value
+              )
+              .subscribe((res) => {
+                return res;
+              });
             this.menuForm.reset();
             this.dialogRef.close('Guardar');
           },
@@ -126,6 +136,7 @@ export class DialogMenuComponent implements OnInit {
           title: 'Menu editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.apiMenuService
           .UploadImage(id, this.imageUploaded, this.menuForm.get('pass')?.value)

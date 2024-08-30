@@ -93,7 +93,7 @@ export class MenuComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
-      confirmButtonText: '¡Sí, bórralo!',
+      confirmButtonText: '¡Sí, bórralo!',heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         this.apiMenuService.delete('p_menu_oid', id).subscribe({

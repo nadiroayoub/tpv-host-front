@@ -5,6 +5,7 @@ export interface Empleado {
   dni: string;
   nombre: string;
   apellidos: string;
+  telefono:string;
   email: string;
   pass: string;
   foto: string;

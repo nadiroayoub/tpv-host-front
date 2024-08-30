@@ -13,6 +13,8 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { Usuario } from '../../auth/interfaces/interfaces';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-dialog-empresa',
@@ -28,6 +30,7 @@ export class DialogEmpresaComponent implements OnInit {
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private apiEmpresaService: ApiEmpresaService,
+    private authService: AuthService,
     private dialogRef: MatDialogRef<DialogEmpresaComponent>
   ) {}
 
@@ -41,9 +44,9 @@ export class DialogEmpresaComponent implements OnInit {
       provincia: ['', Validators.required],
       cp: ['', Validators.required],
       pais: ['', Validators.required],
-      email: ['', Validators.required],
-      fechaconstitucion: ['', Validators.required],
-      telefono: ['', Validators.required],
+      email: [''],
+      fechaconstitucion: [''],
+      telefono: [''],
     });
 
     if (this.editData) {
@@ -66,6 +69,11 @@ export class DialogEmpresaComponent implements OnInit {
   }
   //#region Empresa API
   addEmpresa(data: any) {
+    this.empresaForm.addControl('Duenyo_oid', new FormControl(''));
+    // this.empresaForm.controls['Duenyo_oid'].setValue(this.authService.usuario.Id);
+    this.empresaForm.patchValue({
+      Duenyo_oid: this.authService.usuario.Id,
+    });
     if (!this.editData) {
       if (this.empresaForm.valid) {
         this.apiEmpresaService.add(this.empresaForm.value).subscribe({
@@ -76,6 +84,7 @@ export class DialogEmpresaComponent implements OnInit {
               title: '¡Empresa creada!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
             this.empresaForm.reset();
             this.dialogRef.close('Guardar');
@@ -102,6 +111,7 @@ export class DialogEmpresaComponent implements OnInit {
           title: 'Empresa editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.empresaForm.reset();
         this.dialogRef.close('Editar');

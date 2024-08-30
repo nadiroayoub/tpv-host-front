@@ -95,12 +95,23 @@ export class DialogPlatoComponent implements OnInit {
             Swal.fire({
               position: 'center',
               icon: 'success',
-              title: '¡Menu creada!',
+              title: '¡Plato creado!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
+            this.apiPlatoService
+              .UploadImage(
+                res.Id,
+                this.imageUploaded,
+                this.platoForm.get('pass')?.value
+              )
+              .subscribe((res) => {
+                return res;
+              });
             this.platoForm.reset();
             this.dialogRef.close('Guardar');
+
           },
           error: (err: any) => {
             Swal.fire({
@@ -124,6 +135,7 @@ export class DialogPlatoComponent implements OnInit {
           title: 'Plato editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.apiPlatoService
           .UploadImage(

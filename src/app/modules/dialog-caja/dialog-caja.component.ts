@@ -97,6 +97,7 @@ export class DialogCajaComponent implements OnInit {
               title: '¡Caja creada!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
             this.cajaForm.reset();
             this.dialogRef.close('Guardar');
@@ -123,6 +124,7 @@ export class DialogCajaComponent implements OnInit {
           title: 'Caja editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.cajaForm.reset();
         this.dialogRef.close('Editar');

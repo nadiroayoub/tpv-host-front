@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiEmployeeService } from 'src/app/services/apiEmployee/api-employee.service';
 import { Empleado } from 'src/app/shared/models/Empleado';
 import Swal from 'sweetalert2';
+import { CommonServiceService } from 'src/app/services/commonService/common-service.service';
 
 @Component({
   selector: 'app-empleado',
@@ -19,6 +20,7 @@ export class EmpleadoComponent implements OnInit {
     'DNI',
     'Nombre',
     'Apellidos',
+    'Telefono',
     'Email',
     'Negocio',
     'Accion',
@@ -40,6 +42,11 @@ export class EmpleadoComponent implements OnInit {
       cell: (element: Empleado) => `${element.apellidos}`,
     },
     {
+      columnDef: 'Telefono',
+      header: 'Telefono',
+      cell: (element: Empleado) => `${element.telefono}`,
+    },
+    {
       columnDef: 'Pass',
       header: 'Pass',
       cell: (element: Empleado) => `${element.pass}`,
@@ -58,12 +65,15 @@ export class EmpleadoComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private apiEmployeeService: ApiEmployeeService
+    private apiEmployeeService: ApiEmployeeService,
+    private commonService: CommonServiceService
   ) {}
   ngOnInit(): void {
     this.getAllEmployees();
   }
-
+  sendMessage() {
+    this.commonService.sendUpdate('Refresh');
+  }
   //#region Employee API
   getAllEmployees() {
     this.apiEmployeeService.getList().subscribe({
@@ -101,6 +111,7 @@ export class EmpleadoComponent implements OnInit {
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
       confirmButtonText: '¡Sí, bórralo!',
+      heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         this.apiEmployeeService.delete('p_empleado_oid', id).subscribe({
@@ -118,6 +129,7 @@ export class EmpleadoComponent implements OnInit {
         });
       }
     });
+    this.sendMessage();
   }
   //#endregion
   applyFilter(event: Event) {

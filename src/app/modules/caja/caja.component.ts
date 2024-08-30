@@ -91,6 +91,7 @@ export class CajaComponent implements OnInit {
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
       confirmButtonText: '¡Sí, bórralo!',
+      heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         this.apiCajaService.delete('p_caja_oid', id).subscribe({

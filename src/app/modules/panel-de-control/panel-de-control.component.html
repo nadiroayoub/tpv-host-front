@@ -20,7 +20,6 @@
       *ngFor="let empleado of empleadosList; let i = index"
     >
       <mat-card-header>
-        <!-- url('" + tmp_path + "')" -->
         <div
           mat-card-avatar
           class="example-header-image"
@@ -28,12 +27,11 @@
             'url(' +
             (empleadoFotos[i] == ''
               ? 'assets/images/profile-placeholder.png'
-              : empleadoFotos[i] ) +
+              : 'assets/images/x.jpg') +
             ')'
           "
-        ></div>
-        <!-- [ngStyle]="{ 'background-image': 'url(' + {{empleado.Foto}} + ')' }" -->
-        <!-- [style.background-image]="'url({empleado.Foto})'" -->
+        >
+      </div>
         <mat-card-title>{{
           empleado.Nombre | titlecase : true
         }}</mat-card-title>

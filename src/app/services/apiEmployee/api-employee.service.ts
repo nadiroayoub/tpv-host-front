@@ -17,6 +17,15 @@ export class ApiEmployeeService extends ApiService<Empleado> {
   }
   getAllEmpleadoByNegocio(id: string | number): Observable<Empleado[]> {
     var endpoint = `${this.APIUrl}/GetAllEmpleadoByNegocio?idNegocio=${id}`;
-    return this.httpClient.get<Empleado[]>(`${endpoint}`).pipe(catchError(this.handleError));
+    return this.httpClient
+      .get<Empleado[]>(`${endpoint}`)
+      .pipe(catchError(this.handleError));
+  }
+  // imageName: string | number
+  getImage(id: string | number): Observable<string | object> {
+    var endpoint = `${this.APIUrl}/GetImage`;
+    return this.httpClient
+      .get(`${endpoint}?id=${id}`)
+      .pipe(catchError(this.handleError));
   }
 }

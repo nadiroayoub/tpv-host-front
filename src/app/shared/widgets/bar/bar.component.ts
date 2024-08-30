@@ -84,14 +84,31 @@ export class BarComponent implements OnInit {
     this.apiNegocioService.getList().subscribe((negocios) => {
       negocios.forEach((negocio) => {
         // push negocio to nombreNegocios
-        this.nombreNegocios.push(negocio.Nombre);
+        
         // this.ciudades.push(negocio.Ciudad);
-        this.apiCobroService
-          .dameCobroPorNegocio(negocio.Id)
-          .subscribe((cobros: Cobro[]) => {
-            this.numeroCobrosPorNegocio.push(cobros.length);
-          });
+        // this.apiCobroService
+        //   .dameCobroPorNegocio(negocio.Id)
+        //   .subscribe((cobros: Cobro[]) => {
+        //     this.numeroCobrosPorNegocio.push(cobros.length);
+        //   });
+        this.getCobros(negocio.Id, negocio.Nombre).then((data) => {
+          console.log(data);
+        });
       });
+      console.log(this.numeroCobrosPorNegocio);
+    });
+  }
+
+  getCobros(negocioId: any, negocioNombre:string) {
+    return new Promise(async (resolve) => {
+      this.apiCobroService
+        .dameCobroPorNegocio(negocioId)
+        .subscribe((cobros: Cobro[]) => {
+          if(cobros != null){
+            this.nombreNegocios.push(negocioNombre);
+            this.numeroCobrosPorNegocio.push(cobros.length);
+          }
+        });
     });
   }
 }

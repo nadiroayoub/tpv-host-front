@@ -82,6 +82,7 @@ export class DialogNegocioComponent implements OnInit {
               title: 'Negocio creado',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
             this.negocioForm.reset();
             this.dialogRef.close('Guardar');
@@ -108,6 +109,7 @@ export class DialogNegocioComponent implements OnInit {
           title: '¡Negocio editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.negocioForm.reset();
         this.dialogRef.close('Editar');

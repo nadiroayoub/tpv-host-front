@@ -82,6 +82,7 @@ export class DialogClienteComponent implements OnInit {
               title: '¡Cliente creado!',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
             this.clienteForm.reset();
             this.dialogRef.close('Guardar');
@@ -108,6 +109,7 @@ export class DialogClienteComponent implements OnInit {
           title: 'Cliente editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.clienteForm.reset();
         this.dialogRef.close('Editar');

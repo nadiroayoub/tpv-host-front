@@ -79,6 +79,7 @@ export class MesaComponent implements OnInit {
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
       confirmButtonText: '¡Sí, bórralo!',
+      heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         this.apiMesaService.delete('p_mesa_oid', id).subscribe({

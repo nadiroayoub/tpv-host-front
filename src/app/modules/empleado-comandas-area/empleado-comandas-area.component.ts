@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { Subscription } from 'rxjs';
 import { ApiEmployeeService } from '../../services/apiEmployee/api-employee.service';
 import { Empleado } from '../../shared/models/Empleado';
+import { CommonServiceService } from '../../services/commonService/common-service.service';
 
 @Component({
   selector: 'app-empleado-comandas-area',
@@ -18,7 +20,23 @@ export class EmpleadoComandasAreaComponent implements OnInit {
   listaPreparada: number[] = [];
   listaRechazada: number[] = [];
   series: [] = [];
-  constructor(private apiEmployeeService: ApiEmployeeService) {}
+  messageReceived: any;
+  private subscriptionName: Subscription;
+  constructor(
+    private apiEmployeeService: ApiEmployeeService,
+    private commonService: CommonServiceService
+  ) {
+    this.subscriptionName = this.commonService
+      .getUpdate()
+      .subscribe((message) => {
+        //message contains the data sent from service
+        this.messageReceived = message;
+      });
+  }
+  ngOnDestroy() {
+    // It's a good practice to unsubscribe to ensure no memory leaks
+    this.subscriptionName.unsubscribe();
+  }
   ngOnInit(): void {
     this.apiEmployeeService.getList().subscribe((empleados: any[]) => {
       empleados.forEach((empleado: any) => {

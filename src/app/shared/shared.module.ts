@@ -22,6 +22,7 @@ import { BarComponent } from './widgets/bar/bar.component';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { MatInputModule } from '@angular/material/input';
 import { TitleCasePipe } from './pipe/title-case.pipe';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TitleCasePipe } from './pipe/title-case.pipe';
     BarComponent,
     ErrorMessageComponent,
     TitleCasePipe,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,

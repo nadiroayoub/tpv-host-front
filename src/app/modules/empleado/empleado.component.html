@@ -47,6 +47,15 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.Apellidos }} </mat-cell>
         </ng-container>
+        
+        <!-- Telefono Column -->
+        <ng-container matColumnDef="Telefono">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Telefono
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.Telefono }} </mat-cell>
+        </ng-container>
+        
 
         <!-- Email Column -->
         <ng-container matColumnDef="Email">

@@ -11,6 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { Negocio } from 'src/app/shared/models/Negocio';
 import { ApiNegocioService } from 'src/app/services/apiNegocio/api-negocio.service';
+import { CommonServiceService } from '../../services/commonService/common-service.service';
 
 @Component({
   selector: 'app-dialog-empleado',
@@ -32,7 +33,8 @@ export class DialogEmpleadoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public editData: any,
     private apiEmployeeService: ApiEmployeeService,
     private apiNegocioService: ApiNegocioService,
-    private dialogRef: MatDialogRef<DialogEmpleadoComponent>
+    private dialogRef: MatDialogRef<DialogEmpleadoComponent>,
+    private commonService: CommonServiceService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class DialogEmpleadoComponent implements OnInit {
         dni: ['', [Validators.required, Validators.pattern(this.nifNieRegex)]],
         nombre: ['', Validators.required],
         apellidos: ['', Validators.required],
+        telefono: [''],
         email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
         pass: [
           null,
@@ -73,6 +76,7 @@ export class DialogEmpleadoComponent implements OnInit {
       this.empleadoForm.controls['dni'].setValue(this.editData.Dni);
       this.empleadoForm.controls['nombre'].setValue(this.editData.Nombre);
       this.empleadoForm.controls['apellidos'].setValue(this.editData.Apellidos);
+      this.empleadoForm.controls['telefono'].setValue(this.editData.Telefono);
       this.empleadoForm.controls['email'].setValue(this.editData.Email);
       this.empleadoForm.controls['Negocio_oid'].setValue(
         this.editData.NegocioEmpleado.Id
@@ -112,10 +116,10 @@ export class DialogEmpleadoComponent implements OnInit {
   addEmpleado(data: any) {
     this.empleadoForm.addControl(
       'Foto',
-      new FormControl('', Validators.required)
+      new FormControl('')
     );
     this.empleadoForm.patchValue({
-      Foto: 'string',
+      Foto: '',
     });
     if (!this.editData) {
       if (this.empleadoForm.valid) {
@@ -127,7 +131,9 @@ export class DialogEmpleadoComponent implements OnInit {
               title: 'Empleado creado',
               showConfirmButton: false,
               timer: 3500,
+              heightAuto: false,
             });
+
             this.empleadoForm.reset();
             this.dialogRef.close('Guardar');
           },
@@ -143,6 +149,10 @@ export class DialogEmpleadoComponent implements OnInit {
     } else {
       this.updateEmpleado(this.empleadoForm.value.id, this.empleadoForm.value);
     }
+    this.sendMessage();
+  }
+  sendMessage() {
+    this.commonService.sendUpdate('Refresh');
   }
   updateEmpleado(id: string, data: any) {
     this.apiEmployeeService.update('idEmpleado', id, data).subscribe({
@@ -153,6 +163,7 @@ export class DialogEmpleadoComponent implements OnInit {
           title: '¡Empleado editado!',
           showConfirmButton: false,
           timer: 3500,
+          heightAuto: false,
         });
         this.empleadoForm.reset();
         this.dialogRef.close('Editar');
@@ -165,9 +176,11 @@ export class DialogEmpleadoComponent implements OnInit {
         });
       },
     });
+    this.sendMessage();
   }
   getEmpleados() {
     return this.apiEmployeeService.getList();
+    this.sendMessage();
   }
   //#endregion
 }

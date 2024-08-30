@@ -36,27 +36,27 @@ export class ColumnChartComponent implements OnInit {
         var numberComandas = res;
         data = [
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1),
             numberComandas[5],
           ],
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 2),
             numberComandas[4],
           ],
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 2),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 3),
             numberComandas[3],
           ],
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 3),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 4),
             numberComandas[2],
           ],
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 4),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 5),
             numberComandas[1],
           ],
           [
-            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 5),
+            Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 6),
             numberComandas[0],
           ],
         ];
@@ -66,7 +66,7 @@ export class ColumnChartComponent implements OnInit {
             type: 'column',
           },
           title: {
-            text: 'Pedidos',
+            text: 'Pedidos por día',
           },
           subtitle: {
             text: '' + '' + '',

@@ -92,6 +92,7 @@ export class PlatoComponent implements OnInit {
       confirmButtonColor: '#57ae51',
       cancelButtonColor: '#f44336',
       confirmButtonText: '¡Sí, bórralo!',
+      heightAuto: false,
     }).then((result) => {
       if (result.isConfirmed) {
         this.apiPlatoService.delete('p_plato_oid', id).subscribe({
